@@ -7,6 +7,7 @@ jobs:
     permissions:
       contents: read
     steps:
+      - uses: actions/checkout@v6
       - name: Install Deno
         uses: "denoland/setup-deno@v2"
         with:
