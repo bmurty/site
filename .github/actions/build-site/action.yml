@@ -8,11 +8,6 @@ runs:
       uses: denoland/setup-deno@v2
       with:
         deno-version: v2.x
-    - name: Copy Deno binary to bin directory
-      shell: bash
-      run: |
-        mkdir bin
-        cp $(which deno) ./bin
     - name: Setup environment
       shell: bash
       run: ./bin/deno task setup
