@@ -44,9 +44,9 @@ else
     echo 'WARNING - direnv not found, please install from https://direnv.net/'
 fi
 
-# Install Lume packages for Deno
+# Install Lume as a local Deno package
 
-deno install --allow-run --allow-env --allow-read --allow-write=deno.json --name lume --force --reload https://deno.land/x/lume_cli/mod.ts
+deno install --allow-run --allow-env --allow-read --allow-write=deno.json --root. /bin --name lume --force --reload https://deno.land/x/lume_cli/mod.ts
 
 # Check for ExifTool install 
 
