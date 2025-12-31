@@ -6,6 +6,8 @@ $RECYCLE.BIN/
 .env
 !.env.example
 
+!.envrc
+
 /inbox
 /build
 /public
