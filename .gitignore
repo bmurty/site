@@ -1,11 +1,6 @@
 $RECYCLE.BIN/
 .DS_Store
 
-/.idea
-/.vs
-
-.tags
-.tags_swap
 
 *.log
 
@@ -13,12 +8,11 @@ $RECYCLE.BIN/
 !.env.example
 
 /inbox
-
-/bin
 /build
 /public
+
+/bin
+
 node_modules
 
 _config.ts
-
-.zed/
