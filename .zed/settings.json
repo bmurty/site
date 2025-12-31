@@ -22,6 +22,10 @@
               "fileMatch": ["package.json"],
               "url": "https://www.schemastore.org/package",
             },
+            {
+              "fileMatch": [".github/*.yml", ".github/**/*.yml"],
+              "url": "https://www.schemastore.org/github-workflow",
+            },
           ],
         },
       },
@@ -56,6 +60,9 @@
         "!vtsls",
         "!eslint",
       ],
+      "formatter": "language_server",
+    },
+    "YAML": {
       "formatter": "language_server",
     },
   },
