@@ -10,7 +10,10 @@
   "editor.tabSize": 2,
   "json.schemas": [
     {
-      "fileMatch": ["deno.json", "deno.jsonc"],
+      "fileMatch": [
+        "deno.json",
+        "deno.jsonc"
+      ],
       "url": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
     },
   ],
@@ -32,5 +35,11 @@
   },
   "[shellscript]": {
     "files.trimTrailingWhitespace": false,
+  },
+  "files.exclude": {
+    "**/.zed/**": true
+  },
+  "files.watcherExclude": {
+    "**/.zed/**": true
   },
 }
