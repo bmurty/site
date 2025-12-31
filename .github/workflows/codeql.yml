@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - id: build-site
+      - name: Build site
         uses: ./.github/actions/build-site
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
