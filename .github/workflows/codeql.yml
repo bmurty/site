@@ -28,7 +28,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - id: build-site
-        uses: ./.github/actions/build-site@main
+        uses: ./.github/actions/build-site
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:

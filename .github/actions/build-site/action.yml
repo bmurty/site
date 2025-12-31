@@ -1,10 +1,9 @@
 name: "Build site"
 description: "Install frameworks and dependencies, then build the site."
+author: "bmurty"
 runs:
   using: composite
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
     - name: Install Deno
       uses: denoland/setup-deno@v2
       with:
