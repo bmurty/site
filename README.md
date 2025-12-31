@@ -24,7 +24,6 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 - All files in the `content` directory **must** contain your own content instead
 - All files in the `assets` directory **must** contain your own static files instead
 - Purchase your own license to use the [Mass-Driver IO font](https://io.mass-driver.com/) or update the CSS to use other fonts
-- Purchase [Font Awesome Pro](https://fontawesome.com/), setup your own kit, and update the `kit.fontawesome.com` script path in the source code. Alternatively, you can use a free icon pack and update the code in your fork to use that instead.
 
 6. Commit and push all of these changes to your forked repository
 7. Update the Settings for your forked repository via GitHub:
