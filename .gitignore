@@ -19,7 +19,6 @@ $RECYCLE.BIN/
 /public
 node_modules
 
-release-notes.txt
 _config.ts
 
 .zed/

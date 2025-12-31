@@ -36,7 +36,8 @@
     "lint": "deno lint && deno fmt",
     "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
     "new-post": "deno run --allow-read --allow-env --allow-write=./ src/commands/new-post.command.ts",
-    "release": "deno run --allow-run=deno,git --allow-read --allow-env --allow-write=./ src/commands/release.command.ts",
+    "release": "bash ./src/commands/release.command.sh",
+    "release-notes": "bash ./src/commands/release-notes.command.sh",
     "serve": "deno task build && deno run --allow-net --allow-read src/commands/server.command.ts",
     "setup": "bash ./src/commands/setup.command.sh",
     "test": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
