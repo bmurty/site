@@ -26,15 +26,13 @@ jobs:
           - language: javascript-typescript
             build-mode: none
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Build site
+        uses: ./.github/workflows/partials/build-site.yml
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-      - name: Build site
-        uses: ./.github/workflows/partials/build-site.yml
       - name: Run CodeQL analysis
         uses: github/codeql-action/analyze@v4
         with:
