@@ -1,4 +1,4 @@
-name: "Build site"
+name: "Build Site"
 description: "Install frameworks and dependencies, then build the site."
 author: "bmurty"
 runs:

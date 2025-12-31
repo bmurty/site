@@ -13,15 +13,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - name: Setup Deno
-        uses: "denoland/setup-deno@v2"
-        with:
-          deno-version: v2.x
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup environment
-        run: |
-          deno task setup
-          sudo apt-get -y install exiftool
+      - name: Checkout repository
+        uses: actions/checkout@v6
       - name: Build site
-        run: deno task build
+        uses: ./.github/actions/build-site
