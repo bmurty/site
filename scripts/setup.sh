@@ -46,7 +46,10 @@ fi
 
 # Install Lume as a local Deno package
 
-deno install --allow-run --allow-env --allow-read --allow-write=deno.json --root ./bin --name lume --force --reload https://deno.land/x/lume_cli/mod.ts
+deno install --global \
+    --allow-run --allow-env --allow-read --allow-write=deno.json \
+    --root ./bin --name lume --force --reload \
+    https://deno.land/x/lume_cli/mod.ts
 
 # Check for ExifTool install 
 

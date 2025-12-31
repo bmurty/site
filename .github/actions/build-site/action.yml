@@ -12,13 +12,9 @@ runs:
       id: artifact
       shell: bash
       run: echo "artifact-file-name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
-    - name: Install Deno
-      uses: denoland/setup-deno@v2
-      with:
-        deno-version: v2.x
     - name: Setup environment
       shell: bash
-      run: deno task setup
+      run: ./bin/deno task setup
     - name: Build site
       shell: bash
       run: ./bin/deno task build

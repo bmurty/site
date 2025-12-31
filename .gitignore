@@ -1,7 +1,6 @@
 $RECYCLE.BIN/
 .DS_Store
 
-
 *.log
 
 .env
@@ -10,8 +9,6 @@ $RECYCLE.BIN/
 /inbox
 /build
 /public
-
-/bin
 
 node_modules
 
