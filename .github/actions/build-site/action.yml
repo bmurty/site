@@ -22,7 +22,7 @@ runs:
     - name: Upload build files
       uses: actions/upload-artifact@v6
       with:
-        name: build-${GITHUB_SHA}
+        name: build-${{ github.sha }}
         overwrite: true
         include-hidden-files: true
         retention-days: 1

@@ -16,7 +16,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v7
         with:
-          name: build-${GITHUB_SHA}
+          name: build-${{ github.sha }}
       - name: Run tests
         shell: bash
         run: ./bin/deno task test
@@ -33,7 +33,7 @@ jobs:
       - name: Download build files
         uses: actions/download-artifact@v7
         with:
-          name: build-${GITHUB_SHA}
+          name: build-${{ github.sha }}
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload GitHub Pages artifact
