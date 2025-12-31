@@ -8,6 +8,24 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "editor.tabSize": 2,
+  "json.schemas": [
+    {
+      "fileMatch": ["deno.json", "deno.jsonc"],
+      "url": "https://raw.githubusercontent.com/denoland/deno/refs/heads/main/cli/schemas/config-file.v1.json",
+    },
+  ],
+  "yaml.schemas": {
+    "https://www.schemastore.org/github-workflow": [
+      ".github/*.yml",
+      ".github/**/*.yml",
+    ],
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+  },
   "[markdown]": {
     "editor.formatOnSave": false,
     "editor.formatOnPaste": false,
