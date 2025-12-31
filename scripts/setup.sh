@@ -34,19 +34,7 @@ else
     exit 1
 fi
 
-# Install Lume packages for Deno
-
-deno install --global --allow-run --allow-env --allow-read --allow-write=deno.json --name lume --force --reload https://deno.land/x/lume_cli/mod.ts
-
-# Install ExifTool
-
-if which exiftool ; then
-    echo 'OK - ExifTool is installed'
-else
-    echo 'WARNING - ExifTool not found, please install from https://exiftool.org/'
-fi
-
-# Install direnv
+# Attmept to configure direnv
 
 if which direnv ; then
     direnv allow
@@ -54,6 +42,18 @@ if which direnv ; then
     echo 'OK - direnv is installed and configured'
 else
     echo 'WARNING - direnv not found, please install from https://direnv.net/'
+fi
+
+# Install Lume packages for Deno
+
+deno install --allow-run --allow-env --allow-read --allow-write=deno.json --name lume --force --reload https://deno.land/x/lume_cli/mod.ts
+
+# Check for ExifTool install 
+
+if which exiftool ; then
+    echo 'OK - ExifTool is installed'
+else
+    echo 'WARNING - ExifTool not found, please install from https://exiftool.org/'
 fi
 
 # Done
