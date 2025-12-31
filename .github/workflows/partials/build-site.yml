@@ -2,13 +2,19 @@ name: Build site
 on:
   workflow_call:
 jobs:
-  build-site:
+  checkout-repo:
     runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
+  build-site:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    needs: checkout-repo
+    steps:
       - name: Setup Deno
         uses: "denoland/setup-deno@v2"
         with:
