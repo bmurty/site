@@ -8,16 +8,18 @@ runs:
       uses: denoland/setup-deno@v2
       with:
         deno-version: v2.x
+    - name: Copy Deno binary to bin directory
+      shell: bash
+      run: |
+        mkdir bin
+        cp $(which deno) ./bin
     - name: Setup environment
       shell: bash
-      run: deno task setup
-    - name: Install exiftool
-      shell: bash
-      run: sudo apt-get -y install exiftool
+      run: ./bin/deno task setup
     - name: Build site
       shell: bash
-      run: deno task build
-    - name: Save site build files to artifacts
+      run: ./bin/deno task build
+    - name: Upload build files
       uses: actions/upload-artifact@v4
       with:
         name: site-build
@@ -26,6 +28,7 @@ runs:
         retention-days: 1
         compression-level: 9
         path: |
+          bin/
           build/
           public/
           .env

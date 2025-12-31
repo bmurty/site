@@ -13,16 +13,13 @@ jobs:
         uses: actions/checkout@v6
       - name: Build site
         uses: ./.github/actions/build-site
-      - name: Get built files
+      - name: Download build files
         uses: actions/download-artifact@v4
         with:
           name: site-build
-      - name: Install Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: v2.x
       - name: Run tests
-        run: deno task test
+        shell: bash
+        run: ./bin/deno task test
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -33,7 +30,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Get built files
+      - name: Download build files
         uses: actions/download-artifact@v4
         with:
           name: site-build

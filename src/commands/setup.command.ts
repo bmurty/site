@@ -19,10 +19,7 @@ try {
   // deno-lint-ignore no-explicit-any
 } catch (error: any) {
   if (error.name === "AlreadyExists") {
-    console.log(
-      "%cSkipping ENV file setup, .env file already exists",
-      "color: yellow",
-    );
+    console.log("WARNING - Skipping ENV file setup as it already exists");
   }
 }
 
@@ -31,6 +28,10 @@ try {
 exec("deno", ["task", "lume-install"]);
 exec("deno", ["task", "lume-cli-upgrade"]);
 
-// Done, detail next steps
+// Attempt to install ExifTool
 
-console.log("%cSetup completed", "color: green");
+exec("deno", ["task", "exiftool-install"]);
+
+// Completed
+
+console.log("DONE - Setup command finished");
