@@ -30,16 +30,16 @@
   },
   "nodeModulesDir": "none",
   "tasks": {
-    "build": "bash ./scripts/build.sh",
+    "build": "bash ./bin/build.sh",
     "deno-upgrade": "deno upgrade stable || true",
     "deps": "deno outdated --update --latest || true",
     "lint": "deno lint && deno fmt",
     "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-    "new-post": "bash ./scripts/new-post.sh",
-    "release": "bash ./scripts/release.sh",
-    "release-notes": "bash ./scripts/release-notes.sh",
+    "new-post": "bash ./bin/new-post.sh",
+    "release": "bash ./bin/release.sh",
+    "release-notes": "bash ./bin/release-notes.sh",
     "serve": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public",
-    "setup": "bash ./scripts/setup.sh",
+    "setup": "bash ./bin/setup.sh",
     "test": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
   }
 }
