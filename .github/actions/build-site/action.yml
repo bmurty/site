@@ -1,9 +1,17 @@
 name: "Build Site"
 description: "Install frameworks and dependencies, then build the site."
 author: "bmurty"
+outputs:
+  build-artifact-name:
+    description: "The name of the artifact containing the build files from this action."
+    value: ${{ steps.artifact.outputs.artifact-file-name }}
 runs:
   using: composite
   steps:
+    - name: Set build artifact name
+      id: artifact
+      shell: bash
+      run: echo "artifact-file-name=build-$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_OUTPUT
     - name: Install Deno
       uses: denoland/setup-deno@v2
       with:
@@ -17,7 +25,7 @@ runs:
     - name: Upload build files
       uses: actions/upload-artifact@v6
       with:
-        name: build-${{ github.sha }}
+        name: ${{ steps.artifact.outputs.artifact-file-name }}
         overwrite: true
         include-hidden-files: true
         retention-days: 1
