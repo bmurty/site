@@ -23,6 +23,12 @@ if [ "$ANSWER" != "y" ]; then
   exit 1
 fi
 
+# Build the site
+
+echo -e "${blue}Building the site${end}"
+
+deno task build
+
 # Run tests and exit if any tests fail
 
 echo -e "${blue}Running tests${end}"
