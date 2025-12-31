@@ -6,6 +6,7 @@ on:
     branches: ["main"]
   schedule:
     - cron: "20 16 * * 5"
+  workflow_dispatch:
 jobs:
   analyze:
     name: Analyze (${{ matrix.language }})
@@ -26,7 +27,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - uses: ./.github/workflows/partials/build-site@SHA
+      - id: build-site
+        uses: ./.github/actions/build-site@main
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
