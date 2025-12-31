@@ -18,7 +18,7 @@ runs:
         deno-version: v2.x
     - name: Setup environment
       shell: bash
-      run: ./bin/deno task setup
+      run: deno task setup
     - name: Build site
       shell: bash
       run: ./bin/deno task build
