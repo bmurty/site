@@ -17,7 +17,7 @@ runs:
     - name: Build site
       shell: bash
       run: deno task build
-    - name: Save Deno binary and site build files
+    - name: Save site build files to artifacts
       uses: actions/upload-artifact@v4
       with:
         name: site-build
@@ -26,7 +26,6 @@ runs:
         retention-days: 1
         compression-level: 9
         path: |
-          ${{ env.DENO_INSTALL }}/bin/deno
           build/
           public/
           .env
