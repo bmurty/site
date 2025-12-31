@@ -1,5 +1,7 @@
 Included in the [latest release](https://github.com/bmurty/site/releases/latest):
 
+- [Fix CI setup following recent changes](https://github.com/bmurty/site/commit/cbaeecb)
+- [Release 20260101.0944](https://github.com/bmurty/site/commit/191b8ac)
 - [Cleanup](https://github.com/bmurty/site/commit/6c31615)
 - [Update CI workflows to use Git LFS](https://github.com/bmurty/site/commit/72fc99f)
 - [Setup Git LFS and move scripts](https://github.com/bmurty/site/commit/d08e166)
