@@ -65,8 +65,8 @@ _Refer to the `tasks` section in [deno.json](deno.json) for the full list of com
 | [assets](assets/) | Static files like images and PDFs. |
 | [config](config/) | Supporting configuration files. |
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
+| [scripts](scripts/) | Helper scripts, refer to the `Commands` section above for more details. |
 | [src](src/) | Source code and related unit tests. |
-| [src/commands](src/commands/) | Helper scripts, refer to the `Commands` section above for more details. |
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |
 | [src/templates](src/templates/) | Nunjucks page templates. |
