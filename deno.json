@@ -38,7 +38,7 @@
     "new-post": "deno run --allow-read --allow-env --allow-write=./ src/commands/new-post.command.ts",
     "release": "bash ./src/commands/release.command.sh",
     "release-notes": "bash ./src/commands/release-notes.command.sh",
-    "serve": "deno task build && deno run --allow-net --allow-read src/commands/server.command.ts",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public",
     "setup": "bash ./src/commands/setup.command.sh",
     "test": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
   }
