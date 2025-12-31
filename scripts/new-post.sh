@@ -27,7 +27,7 @@ title: ${post_title}
 date: ${date_prop}
 url: /posts/${date_slug}_${post_text_slug}
 tags:
-  -
+  - 
 ---
 
 
