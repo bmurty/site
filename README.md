@@ -48,8 +48,6 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | `deno task serve` | Builds the site and starts a local web server. |
 | `deno task release` | Generate and push a new Git Tag, which will then trigger the [GitHub Actions workflow](.github/workflows/release.yml) in the remote repository. |
 | `deno task new-post` | Generate a new blog post Markdown content file. |
-| `deno task deno-upgrade` | Attempt Deno stable version upgrade. |
-| `deno task lume-cli-upgrade` | Attempt Lume CLI version upgrade. |
 | `deno task dependencies` | Attempt Deno third-party package dependency upgrades. |
 
 _Refer to the `tasks` section in [deno.json](deno.json) for the full list of commands._

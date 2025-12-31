@@ -31,7 +31,6 @@
   "nodeModulesDir": "none",
   "tasks": {
     "build": "bash ./bin/build.sh",
-    "deno-upgrade": "deno upgrade stable || true",
     "deps": "deno outdated --update --latest || true",
     "lint": "deno lint && deno fmt",
     "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
