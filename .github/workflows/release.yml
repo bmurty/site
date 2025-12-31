@@ -14,9 +14,9 @@ jobs:
       - name: Build site
         uses: ./.github/actions/build-site
       - name: Download build files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
-          name: site-build
+          name: build-${GITHUB_SHA}
       - name: Run tests
         shell: bash
         run: ./bin/deno task test
@@ -31,9 +31,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Download build files
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
-          name: site-build
+          name: build-${GITHUB_SHA}
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
       - name: Upload GitHub Pages artifact
