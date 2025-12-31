@@ -10,9 +10,12 @@
   "editor.tabSize": 2,
   "[markdown]": {
     "editor.formatOnSave": false,
-    "editor.formatOnPaste": false
+    "editor.formatOnPaste": false,
   },
   "[github-actions-workflow]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
-  }
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+  },
+  "[shellscript]": {
+    "files.trimTrailingWhitespace": false,
+  },
 }

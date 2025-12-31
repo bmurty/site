@@ -21,6 +21,9 @@
       ],
       "formatter": "language_server",
     },
+    "Shell Script": {
+      "remove_trailing_whitespace_on_save": false,
+    },
     "TypeScript": {
       "language_servers": [
         "deno",
