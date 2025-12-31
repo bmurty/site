@@ -5,50 +5,22 @@ on:
       - "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].[0-9][0-9][0-9][0-9]"
 jobs:
   build:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - name: Setup Deno
-        uses: "denoland/setup-deno@v2"
-        with:
-          deno-version: v2.x
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup environment
-        run: |
-          deno task setup
-          sudo apt-get -y install exiftool
+      - name: Checkout repository
+        uses: actions/checkout@v6
       - name: Build site
-        run: deno task build
-      - name: Save build files
-        uses: actions/upload-artifact@v4
-        with:
-          name: site-build
-          overwrite: true
-          include-hidden-files: true
-          retention-days: 1
-          compression-level: 9
-          path: |
-            build/
-            public/
-            .env
+        uses: ./.github/actions/build-site
   test:
     needs: build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
-      - name: Setup Deno
-        uses: "denoland/setup-deno@v2"
-        with:
-          deno-version: v2.x
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Setup environment
-        run: |
-          deno task setup
-          sudo apt-get -y install exiftool
+      - name: Checkout repository
+        uses: actions/checkout@v6
       - name: Get built files
         uses: actions/download-artifact@v4
         with:
@@ -57,18 +29,14 @@ jobs:
         run: deno task test
   deploy:
     needs: test
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       id-token: write
       pages: write
       contents: read
     steps:
-      - name: Setup Deno
-        uses: "denoland/setup-deno@v2"
-        with:
-          deno-version: v2.x
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v6
       - name: Get built files
         uses: actions/download-artifact@v4
         with:
@@ -91,7 +59,7 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Generate release notes
