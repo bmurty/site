@@ -35,13 +35,10 @@
     "deps": "deno outdated --update --latest || true",
     "lint": "deno lint && deno fmt",
     "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-    "lume-cli-upgrade": "lume upgrade-cli || true",
-    "lume-install": "deno install --global --allow-run --allow-env --allow-read --allow-write=deno.json --name lume --force --reload https://deno.land/x/lume_cli/mod.ts",
-    "exiftool-install": "apt-get -y install exiftool 2>/dev/null || echo 'WARNING - ExifTool install failed, please install via https://exiftool.org/'",
     "new-post": "deno run --allow-read --allow-env --allow-write=./ src/commands/new-post.command.ts",
     "release": "deno run --allow-run=deno,git --allow-read --allow-env --allow-write=./ src/commands/release.command.ts",
     "serve": "deno task build && deno run --allow-net --allow-read src/commands/server.command.ts",
-    "setup": "deno run --allow-run=deno --allow-read --allow-write=./ --allow-env src/commands/setup.command.ts",
+    "setup": "bash ./src/commands/setup.command.sh",
     "test": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
   }
 }

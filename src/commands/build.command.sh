@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Build command - Run via "deno task build"
 
 # Setup the message colour characters
