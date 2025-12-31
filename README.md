@@ -45,6 +45,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | ---- | ---- |
 | `deno task build` &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  | Run build process. |
 | `deno task test`  | Run all unit tests. |
+| `deno task setup` | Initialises configuration files and installs local binaries. |
 | `deno task serve` | Builds the site and starts a local web server. |
 | `deno task release` | Generate and push a new Git Tag, which will then trigger the [GitHub Actions workflow](.github/workflows/release.yml) in the remote repository. |
 | `deno task new-post` | Generate a new blog post Markdown content file. |
@@ -60,6 +61,7 @@ _Refer to the `tasks` section in [deno.json](deno.json) for the full list of com
 | [.github/agents/](.github/agents/) | GitHub [AI Agents](https://github.com/resources/articles/what-are-ai-agents) to help minimise the time spent on regular actions. |
 | [.vscode](.vscode/) | Customised [VS Code](https://code.visualstudio.com/) configuration for this repository. |
 | [assets](assets/) | Static files like images and PDFs. |
+| [bin](bin/) | Binary apps used to make local and CI systems consistent. |
 | [config](config/) | Supporting configuration files. |
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
 | [scripts](scripts/) | Helper scripts, refer to the `Commands` section above for more details. |
