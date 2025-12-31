@@ -1,0 +1,20 @@
+name: "Build site"
+description: "Install frameworks and dependencies, then build the site."
+runs:
+  using: composite
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+    - name: Install Deno
+      uses: "denoland/setup-deno@v2"
+      with:
+        deno-version: v2.x
+    - name: Setup environment
+      shell: bash
+      run: deno task setup
+    - name: Install exiftool
+      shell: bash
+      run: sudo apt-get -y install exiftool
+    - name: Build site
+      shell: bash
+      run: deno task build
