@@ -17,6 +17,19 @@ runs:
     - name: Build site
       shell: bash
       run: deno task build
+    - name: Save Deno binary and site build files
+      uses: actions/upload-artifact@v4
+      with:
+        name: site-build
+        overwrite: true
+        include-hidden-files: true
+        retention-days: 1
+        compression-level: 9
+        path: |
+          ${{ env.DENO_INSTALL }}/bin/deno
+          build/
+          public/
+          .env
 branding:
   icon: "box"
   color: "green"
