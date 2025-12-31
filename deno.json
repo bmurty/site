@@ -1,24 +1,16 @@
 {
   "compilerOptions": {
-    "types": [
-      "lume/types.ts"
-    ]
+    "types": ["lume/types.ts"]
   },
   "fmt": {
-    "include": [
-      "src/",
-      "config/lume.config.ts"
-    ],
+    "include": ["src/", "config/lume.config.ts"],
     "useTabs": false,
     "lineWidth": 120,
     "indentWidth": 2,
     "semiColons": true
   },
   "lint": {
-    "include": [
-      "src/",
-      "config/lume.config.ts"
-    ]
+    "include": ["src/", "config/lume.config.ts"]
   },
   "imports": {
     "@gnome/exec": "jsr:@gnome/exec@^0.6.0",
@@ -36,7 +28,7 @@
     "lume/": "https://deno.land/x/lume@v3.0.1/",
     "minify": "npm:minify@^14.1.0"
   },
-  "nodeModulesDir": "auto",
+  "nodeModulesDir": "none",
   "tasks": {
     "build": "bash ./src/commands/build.command.sh",
     "deno-upgrade": "deno upgrade stable || true",
