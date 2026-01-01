@@ -51,8 +51,8 @@ deno task
 
 | Folder / File | Description |
 | ---- | ---- |
+| [.github/actions/](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
 | [.github/workflows/release.yml](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
-| [.github/agents/](.github/agents/) | GitHub [AI Agents](https://github.com/resources/articles/what-are-ai-agents) to help minimise the time spent on regular actions. |
 | [.vscode](.vscode/) | Customised [VS Code](https://code.visualstudio.com/) configuration for this repository. |
 | [assets](assets/) | Static files like images and PDFs. |
 | [bin](bin/) | Binary files used to ensure environment consistency, managed by Git LFS. |
