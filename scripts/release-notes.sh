@@ -3,18 +3,17 @@
 # Generates content for the GitHub Release description
 #  - Run via: deno task release-notes
 
-# If a value is set as an argument when calling this script,
-# save output to that file. Otherwise set a suitable default
-release_notes_file=${1:-"./changelog.log"}
-
-rm -rf $release_notes_file
-touch $release_notes_file
-
-echo 'Included in the [latest release](https://github.com/bmurty/site/releases/latest):' >> $release_notes_file
-echo '' >> $release_notes_file
+# If an argument is provided when calling this script,
+# like "deno task release-notes changes.log", save the output
+# to that file, otherwise set a suitable default.
+RELEASE_FILE=${1:-"./CHANGELOG.md"}
 
 git fetch --tags
 
-previous_git_tag=$(git describe --abbrev=0 --tags `git rev-list --tags --skip=1 --max-count=1`)
+PREV_GIT_TAG=$(git describe --tags --abbrev=0)
 
-git log $previous_git_tag..HEAD --oneline --format="- [%s](https://github.com/bmurty/site/commit/%h)" --no-merges >> $release_notes_file
+GIT_REPO_COMMIT_URL="https://github.com/bmurty/site/commit/"
+
+GIT_LOG_FORMAT="- [%s]($GIT_REPO_COMMIT_URL%h)"
+
+git log $PREV_GIT_TAG..HEAD --oneline --no-merges --format="$GIT_LOG_FORMAT" > $RELEASE_FILE
