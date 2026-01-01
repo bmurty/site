@@ -41,17 +41,11 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 
 ## Commands
 
-| Command | Description |
-| ---- | ---- |
-| `deno task build` &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  | Run build process. |
-| `deno task test`  | Run all unit tests. |
-| `deno task setup` | Initialises configuration files and installs local binaries. |
-| `deno task serve` | Builds the site and starts a local web server. |
-| `deno task release` | Generate and push a new Git Tag, which will then trigger the [GitHub Actions workflow](.github/workflows/release.yml) in the remote repository. |
-| `deno task new-post` | Generate a new blog post Markdown content file. |
-| `deno task dependencies` | Attempt Deno third-party package dependency upgrades. |
+For a full list of the available Deno shortcut commands, run:
 
-_Refer to the `tasks` section in [deno.json](deno.json) for the full list of commands._
+```bash
+deno task
+```
 
 ## Folder structure and key files
 

@@ -3,14 +3,14 @@
     "types": ["lume/types.ts"]
   },
   "fmt": {
-    "include": ["src/", "config/lume.config.ts"],
+    "include": ["src/", "config/lume.config.ts", "deno.json"],
     "useTabs": false,
     "lineWidth": 120,
     "indentWidth": 2,
     "semiColons": true
   },
   "lint": {
-    "include": ["src/", "config/lume.config.ts"]
+    "include": ["src/", "config/lume.config.ts", "deno.json"]
   },
   "imports": {
     "@gnome/exec": "jsr:@gnome/exec@^0.6.0",
@@ -30,15 +30,54 @@
   },
   "nodeModulesDir": "none",
   "tasks": {
-    "build": "bash ./scripts/build.sh",
-    "deps": "deno outdated --update --latest || true",
-    "lint": "deno lint && deno fmt",
-    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-    "new-post": "bash ./scripts/new-post.sh",
-    "release": "bash ./scripts/release.sh",
-    "release-notes": "bash ./scripts/release-notes.sh",
-    "serve": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public",
-    "setup": "bash ./scripts/setup.sh",
-    "test": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
+    "build": {
+      "description": "Build the site and organise the required assets.",
+      "dependencies": ["setup"],
+      "command": "bash ./scripts/build.sh"
+    },
+    "deps": {
+      "description": "Update the project's third-party dependencies.",
+      "dependencies": ["setup"],
+      "command": "deno outdated --update --latest || true"
+    },
+    "lint": {
+      "description": "Run Deno's linting and formatting tools with the configuration defined above.",
+      "dependencies": ["setup"],
+      "command": "deno lint && deno fmt"
+    },
+    "lume": {
+      "description": "Run Lume, a static site generator for Deno.",
+      "dependencies": ["setup"],
+      "command": "echo \"import 'lume/cli.ts'\" | deno run -A -"
+    },
+    "new-post": {
+      "description": "Generate a Markdown file for a new post item.",
+      "dependencies": ["setup"],
+      "command": "bash ./scripts/new-post.sh"
+    },
+    "release": {
+      "description": "Release a new version to GitHub and deploy changes.",
+      "dependencies": ["test", "release-notes"],
+      "command": "bash ./scripts/release.sh"
+    },
+    "release-notes": {
+      "description": "Generates content for the GitHub Release description.",
+      "dependencies": ["setup"],
+      "command": "bash ./scripts/release-notes.sh"
+    },
+    "web": {
+      "description": "Start a web server to show the built site.",
+      "dependencies": ["build"],
+      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public"
+    },
+    "setup": {
+      "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",
+      "command": "bash ./scripts/setup.sh"
+    },
+    "test": {
+      "description": "Run all Deno Test scripts in the 'src' directory.",
+      "dependencies": ["build"],
+      "command": "deno test --allow-run=deno --allow-env --allow-read --allow-net src"
+    }
   }
 }
