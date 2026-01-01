@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# New post file generator
+# Generate a Markdown file for a new post item
 #  - Run via: deno task new-post
 
 # Figure out the post date values based on the local machine's date

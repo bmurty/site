@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Release a new version to GitHub, deploy changes to GitHub Pages
+# Release a new version to GitHub and deploy changes
 #  - Run via: deno task release
 
 # Setup the message colour characters

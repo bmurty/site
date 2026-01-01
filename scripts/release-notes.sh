@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Generates content for the GitHub release description
+# Generates content for the GitHub Release description
 #  - Run via: deno task release-notes
 
 # If a value is set as an argument when calling this script,

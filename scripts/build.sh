@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-# Build command - Run via "deno task build"
+# Build the site and organise the required assets
+#  - Run via: deno task build
 
 # Setup the message colour characters
 
