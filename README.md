@@ -51,7 +51,7 @@ deno task
 
 | Folder / File | Description |
 | ---- | ---- |
-| [.github/actions/](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
+| [.github/actions](.github/actions/) | Helper actions for GitHub Actions workflows |
 | [.github/workflows/release.yml](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
 | [.vscode](.vscode/) | Customised [VS Code](https://code.visualstudio.com/) configuration for this repository. |
 | [assets](assets/) | Static files like images and PDFs. |
