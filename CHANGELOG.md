@@ -1,3 +1,3 @@
-- [Fix release notes script](https://github.com/bmurty/site/commit/8710915)
-- [Update docs](https://github.com/bmurty/site/commit/d2dae6c)
-- [Remove unused AI Agent and Copliot workflow](https://github.com/bmurty/site/commit/59d1fcc)
+- [Update folder paths in CI workflow](https://github.com/bmurty/site/commit/adb901d)
+- [Update CI file permissions](https://github.com/bmurty/site/commit/17c1787)
+- [Update file permissions](https://github.com/bmurty/site/commit/bfb60db)
