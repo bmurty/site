@@ -15,8 +15,8 @@ runs:
     - name: Set executable status on binary files and scripts
       shell: bash
       run: |
-        chmod +x bin/*
-        chmod +x scripts/*.sh
+        chmod +x ./bin/*
+        chmod +x ./scripts/*.sh
     - name: Setup environment
       shell: bash
       run: ./bin/deno task setup
