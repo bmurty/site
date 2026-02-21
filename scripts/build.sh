@@ -47,16 +47,6 @@ echo -e "${yellow}Minifying combined CSS file${end}"
 cat $BUILD_DIR/_assets/css/styles.css | \
 sed -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d' | sed -e :a -e '$!N; s/\n\(.\)/\1/; ta' | tr '\n' ' ' > $BUILD_DIR/_assets/css/styles.min.css
 
-echo -e "${yellow}Building photo posts for photos in 'inbox' directory${end}"
-
-mkdir -p inbox
-deno run --allow-read --allow-write --allow-net src/photo-posts-generate.ts
-
-echo -e "${yellow}Removing EXIF data from all files in the 'assets/images' directory${end}"
-
-exiftool -recurse -all= assets/images
-exiftool -recurse -delete_original assets/images
-
 echo -e "${yellow}Copying over page content files to '$BUILD_DIR'${end}"
 
 cp -r content/* $BUILD_DIR

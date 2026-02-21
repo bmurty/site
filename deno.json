@@ -31,8 +31,6 @@
     "@std/fs": "jsr:@std/fs@^1.0.23",
     "@std/path": "jsr:@std/path@^1.1.4",
     "@std/yaml": "jsr:@std/yaml@^1.0.12",
-    "deno-exif/": "https://deno.land/x/deno_exif@0.0.4/",
-    "imagescript/": "https://deno.land/x/imagescript@1.3.0/",
     "is_json/": "https://deno.land/x/is_json@v1.0.2/",
     "json2yaml/": "https://deno.land/x/json2yaml@v1.0.1/",
     "lume/": "https://deno.land/x/lume@v3.0.1/",
