@@ -14,7 +14,7 @@ services:
       - ./assets:/app/assets
       - ./config:/app/config
       - ./scripts:/app/scripts
-      - ./server.ts:/app/server.ts
+      - ./src/docker-server.ts:/app/docker-server.ts
       # Mount build outputs (allows seeing built files)
       - ./public:/app/public
       - ./build:/app/build
@@ -23,7 +23,7 @@ services:
     environment:
       - DENO_DIR=/deno-dir
     command: >
-      sh -c "deno task build && deno run --allow-net --allow-read --allow-env server.ts"
+      sh -c "deno task build && deno run --allow-net --allow-read --allow-env docker-server.ts"
 
   # Production service - serves pre-built static site
   prod:

@@ -16,6 +16,9 @@ RUN apt-get update && apt-get install -y \
 # Add deno user to sudoers for setup tasks
 RUN echo "deno ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
+# Create home directory for the deno user (not present in base image)
+RUN mkdir -p /home/deno && chown deno:deno /home/deno
+
 # Switch to deno user
 USER deno
 

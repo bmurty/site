@@ -59,7 +59,7 @@ COPY --from=builder /app/public ./public
 EXPOSE 8000
 
 # Run the static file server using the local script
-CMD ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "server.ts"]
+CMD ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "docker-server.ts"]
 
 # Stage 5: Development
 FROM base AS development
@@ -79,4 +79,4 @@ RUN mkdir -p build public
 EXPOSE 8000
 
 # Default command for development (can be overridden)
-CMD ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "server.ts"]
+CMD ["deno", "run", "--allow-net", "--allow-read", "--allow-env", "docker-server.ts"]
