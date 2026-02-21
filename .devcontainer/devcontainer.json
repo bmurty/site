@@ -34,7 +34,7 @@
     }
   },
   // Post-create command to setup the environment
-  "postCreateCommand": "deno task setup",
+  "postCreateCommand": "deno task setup && deno task build",
   // Ensure Deno cache directory is writable by the deno user
   "containerEnv": {
     "DENO_DIR": "/home/deno/.cache/deno"
