@@ -50,6 +50,14 @@
       "description": "Update the project's dependencies.",
       "command": "deno outdated --update --latest || true"
     },
+    "docker-dev": {
+      "description": "Build and run the development Docker container",
+      "command": "docker compose up -d dev"
+    },
+    "docker-prod": {
+      "description": "Build and run the production Docker container",
+      "command": "docker compose up -d prod"
+    },
     "lint": {
       "description": "Run Deno's linting and formatting tools with the configuration defined above.",
       "command": "deno lint && deno fmt"

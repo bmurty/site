@@ -12,6 +12,24 @@ Tests, build and local server commands are available from local environments.
 
 Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be triggered locally and is then handled remotely by a [GitHub Actions workflow](.github/workflows/release.yml).
 
+## Folder Structure
+
+| Folder / File | Description |
+| ---- | ---- |
+| [.github/actions](.github/actions/) | Helper actions for GitHub Actions workflows |
+| [.github/workflows/release.yml](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
+| [.vscode](.vscode/) | Customised [VS Code](https://code.visualstudio.com/) configuration for this repository. |
+| [assets](assets/) | Static files like images and PDFs. |
+| [bin](bin/) | Binary files used to ensure environment consistency, managed by Git LFS. |
+| [config](config/) | Supporting configuration files. |
+| [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
+| [scripts](scripts/) | Helper scripts, refer to the `Commands` section above for more details. |
+| [src](src/) | Source code and related unit tests. |
+| [src/layouts](src/layouts/) | Nunjucks page layouts. |
+| [src/styles](src/styles/) | CSS styles. |
+| [src/templates](src/templates/) | Nunjucks page templates. |
+| [deno.json](deno.json) | [Deno](https://deno.land/) imports, tasks and configuration for this repository. |
+
 ## Initial setup
 
 1. Fork this repository
@@ -31,7 +49,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 - Pages > Source: _GitHub Actions_
 - Pages > Custom domain: _use your own domain_
 
-8. Update `config/CNAME` to use the same domain as you configured above
+8. Update `CNAME` to use the same domain as you configured above
 9. Setup [Google Analytics](https://analytics.google.com/):
 
 - Create a new site in your own account
@@ -47,20 +65,6 @@ For a full list of the available Deno shortcut commands, run:
 deno task
 ```
 
-## Folder structure and key files
+## Docker Usage
 
-| Folder / File | Description |
-| ---- | ---- |
-| [.github/actions](.github/actions/) | Helper actions for GitHub Actions workflows |
-| [.github/workflows/release.yml](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
-| [.vscode](.vscode/) | Customised [VS Code](https://code.visualstudio.com/) configuration for this repository. |
-| [assets](assets/) | Static files like images and PDFs. |
-| [bin](bin/) | Binary files used to ensure environment consistency, managed by Git LFS. |
-| [config](config/) | Supporting configuration files. |
-| [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
-| [scripts](scripts/) | Helper scripts, refer to the `Commands` section above for more details. |
-| [src](src/) | Source code and related unit tests. |
-| [src/layouts](src/layouts/) | Nunjucks page layouts. |
-| [src/styles](src/styles/) | CSS styles. |
-| [src/templates](src/templates/) | Nunjucks page templates. |
-| [deno.json](deno.json) | [Deno](https://deno.land/) imports, tasks and configuration for this repository. |
+For detailed Docker build and deployment instructions, see [docs/DOCKER.md](docs/DOCKER.md).

@@ -4,11 +4,12 @@ $RECYCLE.BIN/
 *.log
 
 .env
+.env.*
 !.env.example
+ecs-task-definition.json
 
 !.envrc
 
-/inbox
 /build
 /public
 
