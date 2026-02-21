@@ -5,7 +5,7 @@
 
 # Recreate build directories
 
-build_dirs=("./build" "./inbox" "./public")
+build_dirs=("./build" "./public")
 
 for build_dir in "${build_dirs[@]}"; do
   rm -rf "$build_dir"
@@ -15,7 +15,7 @@ done
 # Setup an initial ENV file if it doesn't already exist
 
 if [ ! -f "./.env" ]; then
-  cp "./config/.env.example" "./.env"
+  cp "./.env.example" "./.env"
 fi
 
 echo 'OK - Environment config file exists at ./.env'

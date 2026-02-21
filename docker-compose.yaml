@@ -18,7 +18,6 @@ services:
       # Mount build outputs (allows seeing built files)
       - ./public:/app/public
       - ./build:/app/build
-      - ./inbox:/app/inbox
       # Use named volume for Deno cache to speed up rebuilds
       - deno_cache:/deno-dir
     environment:

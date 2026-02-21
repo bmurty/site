@@ -65,7 +65,7 @@ rm -rf $PUBLIC_DIR/sitemap.xml-e
 echo -e "${yellow}Configuring GitHub Pages in the '$PUBLIC_DIR' directory${end}"
 
 # Domain name configuration
-cp "config/CNAME" "$PUBLIC_DIR/CNAME"
+cp "CNAME" "$PUBLIC_DIR/CNAME"
 
 # Custom 404 page
 cp "assets/redirect.html" "$PUBLIC_DIR/404.html"
@@ -84,11 +84,15 @@ cp "config/security.txt" "$PUBLIC_DIR/.well-known/security.txt"
 
 echo -e "${yellow}Copying CSS files to the '$PUBLIC_DIR/css' directory${end}"
 
-mkdir -p $PUBLIC_DIR/css
+mkdir -p "$PUBLIC_DIR/css"
 cp "$BUILD_DIR/_assets/css/styles.min.css" "$PUBLIC_DIR/css/styles.min.css"
 cp -r "src/styles/fontawesome" $PUBLIC_DIR/css
 
 echo -e "${yellow}Building the JSON Feed for Brendan's posts${end}"
 
-mkdir -p $PUBLIC_DIR/brendan
+mkdir -p "$PUBLIC_DIR/brendan"
 deno run --allow-read --allow-write --allow-env src/json-feed.ts
+
+echo -e "${yellow}Cleanup${end}"
+
+rm -rf "$BUILD_DIR"

@@ -9,12 +9,12 @@
 # Build artifacts
 build/
 public/
-inbox/
 node_modules/
 
 # Environment files (will be handled separately)
 .env
-!.env.example
+ecs-task-definition.json
+ecs-task-definition.example.json
 
 # IDE and editor files
 .vscode/

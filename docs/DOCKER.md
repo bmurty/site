@@ -1,6 +1,6 @@
 # Docker Setup for Murty Website
 
-This repository includes Docker configuration for both local development and production deployment to container-based infrastructure like AWS ECS, Google Cloud Run, or Azure Container Instances.
+This repository includes Docker configuration for both local development and production deployment to AWS ECS, acontainer-based infrastructure system.
 
 ## Quick Start
 
@@ -14,16 +14,13 @@ This repository includes Docker configuration for both local development and pro
 Run the development environment with live file watching:
 
 ```bash
-# Build and start the development container
-docker-compose up dev
-
-# Or run in detached mode
-docker-compose up -d dev
+deno task docker-dev
 ```
 
 Access the site at [http://localhost:8000](http://localhost:8000)
 
 The development container:
+
 - Mounts your source code for live editing
 - Rebuilds the site when started
 - Serves the static site on port 8000
@@ -34,8 +31,7 @@ The development container:
 Test the production build locally:
 
 ```bash
-# Build and start the production container
-docker-compose up prod
+deno task docker-prod
 ```
 
 Access the site at [http://localhost:8080](http://localhost:8080)
@@ -78,7 +74,7 @@ docker-compose run dev deno task build
 docker-compose run dev sh
 ```
 
-## Deployment to ECS
+## Deployment to AWS ECS
 
 ### 1. Build and Tag for ECR
 
@@ -105,38 +101,13 @@ docker push <aws-account-id>.dkr.ecr.<region>.amazonaws.com/murty-site:latest
 
 ### 3. Create ECS Task Definition
 
-Create a file `ecs-task-definition.json`:
+Create a copy of the sample ECS Task Definitions file:
 
-```json
-{
-  "family": "murty-site",
-  "networkMode": "awsvpc",
-  "requiresCompatibilities": ["FARGATE"],
-  "cpu": "256",
-  "memory": "512",
-  "containerDefinitions": [
-    {
-      "name": "murty-site",
-      "image": "<aws-account-id>.dkr.ecr.<region>.amazonaws.com/murty-site:latest",
-      "portMappings": [
-        {
-          "containerPort": 8000,
-          "protocol": "tcp"
-        }
-      ],
-      "essential": true,
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "/ecs/murty-site",
-          "awslogs-region": "<region>",
-          "awslogs-stream-prefix": "ecs"
-        }
-      }
-    }
-  ]
-}
+```bash
+cp --update=none "config/ecs-task-definition.example.json" "ecs-task-definition.json"
 ```
+
+Fill out your AWS credentials in the new Git Ignored file at `/ecs-task-definition.json`
 
 ### 4. Register Task Definition
 
@@ -163,55 +134,12 @@ aws ecs update-service \
   --force-new-deployment
 ```
 
-## Deployment to Other Platforms
-
-### Google Cloud Run
-
-```bash
-# Build and push to Google Container Registry
-gcloud builds submit --tag gcr.io/<project-id>/murty-site
-
-# Deploy to Cloud Run
-gcloud run deploy murty-site \
-  --image gcr.io/<project-id>/murty-site \
-  --platform managed \
-  --port 8000 \
-  --allow-unauthenticated
-```
-
-### Azure Container Instances
-
-```bash
-# Build and push to Azure Container Registry
-az acr build --registry <registry-name> --image murty-site:latest .
-
-# Deploy to ACI
-az container create \
-  --resource-group <resource-group> \
-  --name murty-site \
-  --image <registry-name>.azurecr.io/murty-site:latest \
-  --dns-name-label murty-site \
-  --ports 8000
-```
-
-### Docker Hub (for general use)
-
-```bash
-# Tag for Docker Hub
-docker tag murty-site:latest <your-dockerhub-username>/murty-site:latest
-
-# Push to Docker Hub
-docker push <your-dockerhub-username>/murty-site:latest
-```
-
 ## Environment Variables
 
 The container uses the environment variables from `.env` file. In production:
 
 1. Copy `config/.env.example` to `.env` and update values
 2. For ECS, use task definition environment variables or AWS Secrets Manager
-3. For Cloud Run, use `--set-env-vars` flag
-4. For ACI, use `--environment-variables` flag
 
 Example for ECS task definition:
 
@@ -224,67 +152,30 @@ Example for ECS task definition:
 ]
 ```
 
-## Troubleshooting
-
-### Container exits immediately
-
-Check logs:
-```bash
-docker-compose logs dev
-docker logs <container-id>
-```
-
-### Permission issues
-
-Make sure Docker has permissions to access mounted volumes:
-```bash
-chmod -R 755 src content assets config
-```
-
-### Build failures
-
-Clear Docker cache and rebuild:
-```bash
-docker-compose build --no-cache dev
-```
-
-### Port already in use
-
-Change the port mapping in `docker-compose.yml`:
-```yaml
-ports:
-  - "8001:8000"  # Use port 8001 instead
-```
-
 ## CI/CD Integration
 
 ### GitHub Actions Example
 
 ```yaml
 name: Build and Deploy to ECS
-
 on:
   push:
     tags:
       - '[0-9]*'
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
-      
       - name: Build and push image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
@@ -293,24 +184,7 @@ jobs:
         run: |
           docker build --target production -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-      
       - name: Deploy to ECS
         run: |
           aws ecs update-service --cluster <cluster> --service murty-site --force-new-deployment
 ```
-
-## Performance Optimization
-
-The Dockerfile uses multi-stage builds to:
-- Minimize final image size (production image is ~144MB)
-- Separate build dependencies from runtime dependencies
-- Cache layers efficiently for faster builds
-
-Production image includes only:
-- Deno runtime (Alpine-based, minimal)
-- Built static files in `/app/public`
-- Self-contained file server for serving static content
-
-## Support
-
-For issues or questions about Docker setup, please open an issue in the repository.

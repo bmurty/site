@@ -6,13 +6,12 @@ FROM denoland/deno:2.6.10 AS base
 
 # Install system dependencies required for build process
 RUN apt-get update && apt-get install -y \
-    curl \
-    git \
-    git-lfs \
-    libimage-exiftool-perl \
-    ca-certificates \
-    && update-ca-certificates \
-    && rm -rf /var/lib/apt/lists/*
+  curl \
+  git \
+  git-lfs \
+  ca-certificates \
+  && update-ca-certificates \
+  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -35,17 +34,17 @@ RUN deno install --entrypoint deno.json
 # Copy all source files
 COPY . .
 
-# Setup environment file if not exists
-RUN if [ ! -f .env ]; then cp config/.env.example .env; fi
+# Setup environment file if it's not there already
+RUN cp --update=none .env.example .env
 
 # Create required directories
-RUN mkdir -p build inbox public
+RUN mkdir -p build public
 
 # Build the site using the build script
 ENV DENO_TLS_CA_STORE=system
-RUN DENO_FUTURE=1 deno task build
+RUN deno task build
 
-# Stage 4: Production runtime  
+# Stage 4: Production runtime
 FROM denoland/deno:alpine-2.6.10 AS production
 
 WORKDIR /app
@@ -70,11 +69,11 @@ WORKDIR /app
 # Copy all files for development
 COPY . .
 
-# Setup environment file if not exists
-RUN if [ ! -f .env ]; then cp config/.env.example .env; fi
+# Setup environment file if it's not there already
+RUN cp --update=none .env.example .env
 
 # Create required directories
-RUN mkdir -p build inbox public
+RUN mkdir -p build public
 
 # Expose port for development server
 EXPOSE 8000
