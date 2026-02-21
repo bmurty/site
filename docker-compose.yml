@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Development service - builds and serves the site with hot reload capability
   dev:
@@ -25,8 +23,6 @@ services:
       - deno_cache:/deno-dir
     environment:
       - DENO_DIR=/deno-dir
-    env_file:
-      - .env
     command: >
       sh -c "deno task build && deno run --allow-net --allow-read --allow-env server.ts"
 

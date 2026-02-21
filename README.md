@@ -47,6 +47,26 @@ For a full list of the available Deno shortcut commands, run:
 deno task
 ```
 
+## Docker Support
+
+This repository includes Docker configuration for both local development and production deployment.
+
+### Quick Start with Docker
+
+```bash
+# Build and run production container
+docker compose up prod
+
+# Or build and run development container
+docker compose up dev
+```
+
+The site will be available at:
+- Production: http://localhost:8080
+- Development: http://localhost:8000
+
+For detailed Docker deployment instructions including AWS ECS, Google Cloud Run, and Azure Container Instances, see [DOCKER.md](DOCKER.md).
+
 ## Folder structure and key files
 
 | Folder / File | Description |
