@@ -24,6 +24,8 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | [config](config/) | Supporting configuration files. |
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
 | [dev](dev/) | Dev helper scripts, refer to the `Commands` section above for more details. |
+| [docs](docs/) | Documentation for Docker and ECS deployment. |
+| [ecs-autoscaling.*](ECS-AUTOSCALING-README.md) | ECS auto-scaling configuration files (CloudFormation, Terraform). See [ECS-AUTOSCALING-README.md](ECS-AUTOSCALING-README.md) for details. |
 | [src](src/) | Source code and related unit tests. |
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |
