@@ -19,6 +19,15 @@ The devcontainer provides a complete development environment with:
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 - [Dev Containers Extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
+### GPG Commit Signing & SSH Keys
+
+VS Code Dev Containers automatically forward your host's GPG and SSH agents into the container. To take advantage of this:
+
+- **GPG signing**: Ensure your host has GPG configured and your signing key available (`gpg --list-secret-keys`). Git commit signing will work inside the container using your host's GPG agent.
+- **SSH keys**: Ensure your host's SSH agent is running and your key is loaded (`ssh-add -l`). The agent socket is forwarded automatically, so `git` operations over SSH and other SSH connections will work seamlessly.
+
+No additional configuration is needed inside the container — `gnupg2` and `openssh-client` are pre-installed in the Docker image.
+
 ### Usage
 
 1. Open this repository in VS Code
@@ -44,3 +53,7 @@ The development server (port 8000) is automatically forwarded to your local mach
 
 - `devcontainer.json`: Main configuration for the dev container
 - `Dockerfile`: Custom Docker image with all required dependencies
+
+## Notes
+
+- GPG and SSH agent forwarding is handled automatically by VS Code Dev Containers. If signing or SSH authentication isn't working, verify that your host agents are running and keys are loaded before opening the container.

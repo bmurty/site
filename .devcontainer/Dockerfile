@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   bash \
   sudo \
+  gnupg2 \
+  openssh-client \
   && update-ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
@@ -19,7 +21,10 @@ RUN echo "deno ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 # Create home directory and Deno cache directory for the deno user
 # Using /home/deno/.cache/deno instead of /deno-dir to avoid permission issues
 # when VS Code devcontainer init steps run as root before remoteUser switch
-RUN mkdir -p /home/deno/.cache/deno && chown -R deno:deno /home/deno
+RUN mkdir -p /home/deno/.cache/deno \
+  && mkdir -p /home/deno/.gnupg && chmod 700 /home/deno/.gnupg \
+  && mkdir -p /home/deno/.ssh && chmod 700 /home/deno/.ssh \
+  && chown -R deno:deno /home/deno
 
 # Switch to deno user
 USER deno
