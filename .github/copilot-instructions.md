@@ -22,7 +22,7 @@ Other useful commands:
 
 ### Build Process
 
-The build is orchestrated by `scripts/build.sh` which:
+The build is orchestrated by `dev/build.sh` which:
 
 1. Lints and formats code
 2. Creates a temporary `build/` directory
@@ -50,7 +50,7 @@ The build is orchestrated by `scripts/build.sh` which:
   - `*.test.ts`: Deno tests (use `Deno.test()` with steps)
 - **`assets/`**: Static files (fonts, images, PDFs, favicon, etc.)
 - **`config/`**: Configuration files (Lume config, robots.txt, security.txt, keybase.txt)
-- **`scripts/`**: Bash scripts for build automation
+- **`dev/`**: Bash dev scripts for build automation
 - **`public/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
 

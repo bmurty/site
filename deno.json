@@ -40,7 +40,7 @@
   "tasks": {
     "build": {
       "description": "Build the site and organise the required assets.",
-      "command": "bash ./scripts/build.sh"
+      "command": "bash ./dev/build.sh"
     },
     "deps-install": {
       "description": "Install the project's dependencies.",
@@ -68,15 +68,15 @@
     },
     "new-post": {
       "description": "Generate a Markdown file for a new post item.",
-      "command": "bash ./scripts/new-post.sh"
+      "command": "bash ./dev/new-post.sh"
     },
     "release": {
       "description": "Release a new version to GitHub and deploy changes.",
-      "command": "bash ./scripts/release.sh"
+      "command": "bash ./dev/release.sh"
     },
     "release-notes": {
       "description": "Generates content for the GitHub Release description.",
-      "command": "bash ./scripts/release-notes.sh"
+      "command": "bash ./dev/release-notes.sh"
     },
     "web": {
       "description": "Start a web server to show the built site.",
@@ -84,7 +84,7 @@
     },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",
-      "command": "bash ./scripts/setup.sh"
+      "command": "bash ./dev/setup.sh"
     },
     "test": {
       "description": "Run all Deno Test scripts in the 'src' directory.",

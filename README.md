@@ -23,7 +23,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | [bin](bin/) | Binary files used to ensure environment consistency, managed by Git LFS. |
 | [config](config/) | Supporting configuration files. |
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
-| [scripts](scripts/) | Helper scripts, refer to the `Commands` section above for more details. |
+| [dev](dev/) | Dev helper scripts, refer to the `Commands` section above for more details. |
 | [src](src/) | Source code and related unit tests. |
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |
