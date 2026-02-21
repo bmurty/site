@@ -16,8 +16,10 @@ RUN apt-get update && apt-get install -y \
 # Add deno user to sudoers for setup tasks
 RUN echo "deno ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
-# Create home directory for the deno user (not present in base image)
-RUN mkdir -p /home/deno && chown deno:deno /home/deno
+# Create home directory and Deno cache directory for the deno user
+# Using /home/deno/.cache/deno instead of /deno-dir to avoid permission issues
+# when VS Code devcontainer init steps run as root before remoteUser switch
+RUN mkdir -p /home/deno/.cache/deno && chown -R deno:deno /home/deno
 
 # Switch to deno user
 USER deno

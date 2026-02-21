@@ -4,7 +4,6 @@
     "dockerfile": "Dockerfile",
     "context": "."
   },
-
   // Configure tool-specific properties
   "customizations": {
     "vscode": {
@@ -24,22 +23,24 @@
       ]
     }
   },
-
   // Forward port 8000 for the development server
-  "forwardPorts": [8000],
+  "forwardPorts": [
+    8000
+  ],
   "portsAttributes": {
     "8000": {
       "label": "Development Server",
       "onAutoForward": "notify"
     }
   },
-
   // Post-create command to setup the environment
   "postCreateCommand": "deno task setup",
-
+  // Ensure Deno cache directory is writable by the deno user
+  "containerEnv": {
+    "DENO_DIR": "/home/deno/.cache/deno"
+  },
   // Use deno user for security best practices
   "remoteUser": "deno",
-  
   // Mount the workspace with appropriate permissions
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace"
