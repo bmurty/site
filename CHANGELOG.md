@@ -1,3 +1,4 @@
-- [Update folder paths in CI workflow](https://github.com/bmurty/site/commit/adb901d)
-- [Update CI file permissions](https://github.com/bmurty/site/commit/17c1787)
-- [Update file permissions](https://github.com/bmurty/site/commit/bfb60db)
+- [Remove gallery feature and posts](https://github.com/bmurty/site/commit/64a3ac0)
+- [Update deps commands, update deps versions](https://github.com/bmurty/site/commit/ae09db1)
+- [Update dependencies](https://github.com/bmurty/site/commit/265e7a9)
+- [Update Deno binary version](https://github.com/bmurty/site/commit/ea7ea06)

@@ -37,13 +37,4 @@
     float: left;
     clear: both;
   }
-
-  ul.page-gallery {
-    margin: 20px 0;
-    gap: 20px;
-  }
-
-  ul.page-gallery li {
-    width: calc(50% - 40px);
-  }
 }
