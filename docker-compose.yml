@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  # Development service - builds and serves the site with hot reload capability
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount source code for live editing
+      - ./src:/app/src
+      - ./content:/app/content
+      - ./assets:/app/assets
+      - ./config:/app/config
+      - ./scripts:/app/scripts
+      - ./server.ts:/app/server.ts
+      # Mount build outputs (allows seeing built files)
+      - ./public:/app/public
+      - ./build:/app/build
+      - ./inbox:/app/inbox
+      # Use named volume for Deno cache to speed up rebuilds
+      - deno_cache:/deno-dir
+    environment:
+      - DENO_DIR=/deno-dir
+    env_file:
+      - .env
+    command: >
+      sh -c "deno task build && deno run --allow-net --allow-read --allow-env server.ts"
+
+  # Production service - serves pre-built static site
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "8080:8000"
+    restart: unless-stopped
+
+volumes:
+  deno_cache:
