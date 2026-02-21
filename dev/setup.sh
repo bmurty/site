@@ -47,7 +47,7 @@ fi
 # Setup a local version of the Deno binary
 
 if which deno ; then
-  deno upgrade stable
+  deno upgrade stable || true
 
   mkdir -p ./bin
   rm -rf ./bin/deno
@@ -90,6 +90,10 @@ else
   echo 'DONE - Setup script finished'
   exit 1
 fi
+
+# Install project dependencies
+
+deno task deps-install
 
 # Done
 
