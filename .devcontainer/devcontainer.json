@@ -1,0 +1,46 @@
+{
+  "name": "Murty Website",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+
+  // Configure tool-specific properties
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "deno.enable": true,
+        "deno.lint": true,
+        "deno.config": "./deno.json",
+        "deno.importMap": "./deno.json",
+        "deno.codeLens.references": true,
+        "editor.defaultFormatter": "denoland.vscode-deno",
+        "editor.formatOnSave": true,
+        "editor.formatOnPaste": true,
+        "editor.tabSize": 2
+      },
+      "extensions": [
+        "denoland.vscode-deno"
+      ]
+    }
+  },
+
+  // Forward port 8000 for the development server
+  "forwardPorts": [8000],
+  "portsAttributes": {
+    "8000": {
+      "label": "Development Server",
+      "onAutoForward": "notify"
+    }
+  },
+
+  // Post-create command to setup the environment
+  "postCreateCommand": "deno task setup",
+
+  // Use deno user for security best practices
+  "remoteUser": "deno",
+  
+  // Mount the workspace with appropriate permissions
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
+}
