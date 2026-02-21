@@ -50,7 +50,7 @@ FROM denoland/deno:alpine-2.6.10 AS production
 WORKDIR /app
 
 # Copy the server script (no external dependencies)
-COPY server.ts ./
+COPY src/docker-server.ts ./
 
 # Copy only the built site
 COPY --from=builder /app/public ./public

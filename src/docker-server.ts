@@ -6,18 +6,18 @@ console.log(`HTTP server listening on http://localhost:${port}/`);
 Deno.serve({ port }, async (req) => {
   const url = new URL(req.url);
   let filepath = decodeURIComponent(url.pathname);
-  
+
   // Serve index.html for directory requests
   if (filepath.endsWith("/")) {
     filepath += "index.html";
   }
-  
+
   const fullPath = `./public${filepath}`;
-  
+
   try {
     const file = await Deno.open(fullPath, { read: true });
     const stat = await file.stat();
-    
+
     if (stat.isDirectory) {
       file.close();
       // Try to serve index.html from the directory
@@ -35,7 +35,7 @@ Deno.serve({ port }, async (req) => {
         });
       }
     }
-    
+
     // Determine content type
     const ext = filepath.split(".").pop() || "";
     const contentTypes: Record<string, string> = {
@@ -57,9 +57,9 @@ Deno.serve({ port }, async (req) => {
       "ttf": "font/ttf",
       "otf": "font/otf",
     };
-    
+
     const contentType = contentTypes[ext.toLowerCase()] || "application/octet-stream";
-    
+
     // Return response with readable stream - file will be closed when stream is consumed
     return new Response(file.readable, {
       headers: { "Content-Type": contentType },
@@ -81,7 +81,7 @@ Deno.serve({ port }, async (req) => {
         });
       }
     }
-    
+
     // Other errors
     console.error("Server error:", error);
     return new Response("500 Internal Server Error", {
