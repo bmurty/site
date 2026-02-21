@@ -20,11 +20,20 @@ Deno.serve({ port }, async (req) => {
     
     if (stat.isDirectory) {
       file.close();
+      // Try to serve index.html from the directory
       const indexPath = `${fullPath}/index.html`;
-      const indexFile = await Deno.open(indexPath, { read: true });
-      return new Response(indexFile.readable, {
-        headers: { "Content-Type": "text/html; charset=utf-8" },
-      });
+      try {
+        const indexFile = await Deno.open(indexPath, { read: true });
+        return new Response(indexFile.readable, {
+          headers: { "Content-Type": "text/html; charset=utf-8" },
+        });
+      } catch {
+        // Directory index doesn't exist, return 404
+        return new Response("404 Not Found - Directory listing not allowed", {
+          status: 404,
+          headers: { "Content-Type": "text/plain" },
+        });
+      }
     }
     
     // Determine content type
@@ -51,6 +60,7 @@ Deno.serve({ port }, async (req) => {
     
     const contentType = contentTypes[ext.toLowerCase()] || "application/octet-stream";
     
+    // Return response with readable stream - file will be closed when stream is consumed
     return new Response(file.readable, {
       headers: { "Content-Type": contentType },
     });
@@ -73,9 +83,11 @@ Deno.serve({ port }, async (req) => {
     }
     
     // Other errors
+    console.error("Server error:", error);
     return new Response("500 Internal Server Error", {
       status: 500,
       headers: { "Content-Type": "text/plain" },
     });
   }
 });
+

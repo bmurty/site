@@ -302,14 +302,14 @@ jobs:
 ## Performance Optimization
 
 The Dockerfile uses multi-stage builds to:
-- Minimize final image size (production image is ~100MB)
+- Minimize final image size (production image is ~144MB)
 - Separate build dependencies from runtime dependencies
 - Cache layers efficiently for faster builds
 
 Production image includes only:
 - Deno runtime (Alpine-based, minimal)
 - Built static files in `/app/public`
-- File server for serving static content
+- Self-contained file server for serving static content
 
 ## Support
 
