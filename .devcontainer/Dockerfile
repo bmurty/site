@@ -9,8 +9,15 @@ RUN apt-get update && apt-get install -y \
   direnv \
   ca-certificates \
   bash \
+  sudo \
   && update-ca-certificates \
   && rm -rf /var/lib/apt/lists/*
+
+# Add deno user to sudoers for setup tasks
+RUN echo "deno ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+
+# Switch to deno user
+USER deno
 
 # Configure direnv for automatic loading
 RUN echo 'eval "$(direnv hook bash)"' >> ~/.bashrc

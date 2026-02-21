@@ -37,6 +37,10 @@
   // Post-create command to setup the environment
   "postCreateCommand": "deno task setup",
 
-  // Keep container running
-  "remoteUser": "root"
+  // Use deno user for security best practices
+  "remoteUser": "deno",
+  
+  // Mount the workspace with appropriate permissions
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
 }
