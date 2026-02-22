@@ -76,7 +76,7 @@ docker-compose run dev sh
 
 ## Deployment to AWS ECS
 
-For auto-scaling configuration, see [ECS-AUTOSCALING.md](ECS-AUTOSCALING.md).
+For auto-scaling configuration, see [infra/ECS-AUTOSCALING.md](../infra/ECS-AUTOSCALING.md).
 
 ### 1. Build and Tag for ECR
 
@@ -106,15 +106,15 @@ docker push <aws-account-id>.dkr.ecr.<region>.amazonaws.com/murty-site:latest
 Create a copy of the sample ECS Task Definitions file:
 
 ```bash
-cp --update=none "config/ecs-task-definition.example.json" "ecs-task-definition.json"
+cp --update=none "infra/ecs-task-definition.example.json" "infra/ecs-task-definition.json"
 ```
 
-Fill out your AWS credentials in the new Git Ignored file at `/ecs-task-definition.json`
+Fill out your AWS credentials in the new Git Ignored file at `infra/ecs-task-definition.json`
 
 ### 4. Register Task Definition
 
 ```bash
-aws ecs register-task-definition --cli-input-json file://ecs-task-definition.json
+aws ecs register-task-definition --cli-input-json file://infra/ecs-task-definition.json
 ```
 
 ### 5. Create/Update ECS Service

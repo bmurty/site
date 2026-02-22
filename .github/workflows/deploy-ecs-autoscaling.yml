@@ -38,7 +38,7 @@ jobs:
     permissions:
       id-token: write
       contents: read
-    
+
     steps:
       - name: Confirm deployment
         run: |
@@ -47,26 +47,26 @@ jobs:
             exit 1
           fi
           echo "Deployment confirmed. Proceeding with auto-scaling configuration..."
-      
+
       - name: Checkout repository
         uses: actions/checkout@v6
-      
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ inputs.aws_region }}
-      
+
       - name: Validate CloudFormation template
         run: |
           aws cloudformation validate-template \
-            --template-body file://ecs-autoscaling.cloudformation.yaml
-      
+            --template-body file://infra/ecs-autoscaling.cloudformation.yaml
+
       - name: Deploy Auto Scaling Stack
         run: |
           aws cloudformation deploy \
             --stack-name murty-site-autoscaling \
-            --template-file ecs-autoscaling.cloudformation.yaml \
+            --template-file infra/ecs-autoscaling.cloudformation.yaml \
             --parameter-overrides \
               ECSClusterName=${{ inputs.ecs_cluster_name }} \
               ECSServiceName=${{ inputs.ecs_service_name }} \
@@ -74,7 +74,7 @@ jobs:
               MaxTaskCount=${{ inputs.max_task_count }} \
             --capabilities CAPABILITY_IAM \
             --region ${{ inputs.aws_region }}
-      
+
       - name: Describe Stack
         if: success()
         run: |
@@ -82,7 +82,7 @@ jobs:
             --stack-name murty-site-autoscaling \
             --region ${{ inputs.aws_region }} \
             --query 'Stacks[0].Outputs'
-      
+
       - name: Verify Scaling Policies
         if: success()
         run: |

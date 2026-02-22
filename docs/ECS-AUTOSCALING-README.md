@@ -5,12 +5,12 @@ Configuration files for setting up auto-scaling for the murty-site ECS service.
 ## Files
 
 **Infrastructure as Code:**
-- `ecs-autoscaling.cloudformation.yaml` - CloudFormation template with CPU/memory scaling policies
-- `ecs-autoscaling.tf` - Terraform configuration (alternative to CloudFormation)
-- `ecs-autoscaling-config.example.json` - Example configuration reference
+- `infra/ecs-autoscaling.cloudformation.yaml` - CloudFormation template with CPU/memory scaling policies
+- `infra/ecs-autoscaling.tf` - Terraform configuration (alternative to CloudFormation)
+- `infra/ecs-autoscaling-config.example.json` - Example configuration reference
 
 **Deployment:**
-- `dev/deploy-autoscaling.sh` - Bash script for CloudFormation deployment
+- `infra/deploy-aws.sh` - Bash script for CloudFormation deployment
 - `.github/workflows/deploy-ecs-autoscaling.yml` - GitHub Actions workflow
 
 ## Quick Start
@@ -19,7 +19,7 @@ Configuration files for setting up auto-scaling for the murty-site ECS service.
 
 ```bash
 export ECS_CLUSTER_NAME=your-cluster-name
-./dev/deploy-autoscaling.sh
+./infra/deploy-aws.sh
 ```
 
 ### Terraform

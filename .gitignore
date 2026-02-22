@@ -6,7 +6,7 @@ $RECYCLE.BIN/
 .env
 .env.*
 !.env.example
-ecs-task-definition.json
+infra/ecs-task-definition.json
 
 !.envrc
 

@@ -4,10 +4,10 @@ Deploy auto-scaling for the murty-site ECS service using the files in this repos
 
 ## Files Added
 
-- `ecs-autoscaling.cloudformation.yaml` - CloudFormation template
-- `ecs-autoscaling.tf` - Terraform configuration
-- `ecs-autoscaling-config.example.json` - Example configuration
-- `dev/deploy-autoscaling.sh` - Deployment script
+- `infra/ecs-autoscaling.cloudformation.yaml` - CloudFormation template
+- `infra/ecs-autoscaling.tf` - Terraform configuration
+- `infra/ecs-autoscaling-config.example.json` - Example configuration
+- `infra/deploy-aws.sh` - Deployment script
 - `.github/workflows/deploy-ecs-autoscaling.yml` - GitHub Actions workflow
 
 ## Deployment
@@ -16,7 +16,7 @@ Deploy auto-scaling for the murty-site ECS service using the files in this repos
 
 ```bash
 export ECS_CLUSTER_NAME=your-cluster-name
-./dev/deploy-autoscaling.sh
+./infra/deploy-aws.sh
 ```
 
 Prompts for AWS credentials, validates template, and deploys the stack.
@@ -49,7 +49,7 @@ Prompts for AWS credentials, validates template, and deploys the stack.
 ```bash
 aws cloudformation deploy \
   --stack-name murty-site-autoscaling \
-  --template-file ecs-autoscaling.cloudformation.yaml \
+  --template-file infra/ecs-autoscaling.cloudformation.yaml \
   --parameter-overrides \
     ECSClusterName=your-cluster-name \
     ECSServiceName=murty-site-service \
@@ -98,8 +98,8 @@ aws cloudformation describe-stacks \
 
 ## Customization
 
-**CloudFormation:** Edit parameters in `ecs-autoscaling.cloudformation.yaml`
-**Terraform:** Set variables in `ecs-autoscaling.tf`
+**CloudFormation:** Edit parameters in `infra/ecs-autoscaling.cloudformation.yaml`
+**Terraform:** Set variables in `infra/ecs-autoscaling.tf`
 **Bash script:** Set environment variables
 **GitHub Actions:** Provide custom inputs
 
