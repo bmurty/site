@@ -22,19 +22,19 @@
         "lower_bound": 0,
         "upper_bound": 10,
         "scaling_adjustment": 10,
-        "description": "Increase by 10% when CPU is 85-95%"
+        "description": "Increase by 10% when breach is 0-10 points above alarm threshold (85%)"
       },
       {
         "lower_bound": 10,
         "upper_bound": 20,
         "scaling_adjustment": 20,
-        "description": "Increase by 20% when CPU is 95-105%"
+        "description": "Increase by 20% when breach is 10-20 points above alarm threshold"
       },
       {
         "lower_bound": 20,
         "upper_bound": null,
         "scaling_adjustment": 30,
-        "description": "Increase by 30% when CPU is >105%"
+        "description": "Increase by 30% when breach is >20 points above alarm threshold"
       }
     ]
   }
