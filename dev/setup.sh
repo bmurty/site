@@ -28,7 +28,7 @@ if which direnv ; then
     echo 'OK - direnv is installed and configured'
 else
   curl -sfL https://direnv.net/install.sh | bash
-  echo "$HOME/.local/bin" >> $GITHUB_PATH
+  echo "$HOME/.local/bin" >> "$GITHUB_PATH"
 
   if which direnv ; then
     export PATH="$HOME/.local/bin:$PATH"

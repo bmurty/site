@@ -25,14 +25,14 @@ deno task lint
 
 echo -e "${yellow}Clearing the '$PUBLIC_DIR' directory and recreating subdirectories${end}"
 
-rm -rf $PUBLIC_DIR
-mkdir -p $PUBLIC_DIR
+rm -rf "$PUBLIC_DIR"
+mkdir -p "$PUBLIC_DIR"
 
 echo -e "${yellow}Clearing the '$BUILD_DIR' directory and recreating subdirectories${end}"
 
-rm -rf $BUILD_DIR
-mkdir -p $BUILD_DIR
-mkdir -p $BUILD_DIR/_data
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
+mkdir -p "$BUILD_DIR/_data"
 cp -r "src/styles" $BUILD_DIR/_styles
 cp -r "src/templates" $BUILD_DIR/_includes
 cp -r "src/layouts" $BUILD_DIR/_includes/layouts
@@ -44,23 +44,23 @@ cat $BUILD_DIR/_styles/tools-reset.css $BUILD_DIR/_styles/site.css $BUILD_DIR/_s
 
 echo -e "${yellow}Minifying combined CSS file${end}"
 
-cat $BUILD_DIR/_assets/css/styles.css | \
+cat "$BUILD_DIR/_assets/css/styles.css" | \
 sed -e 's/^[ \t]*//g; s/[ \t]*$//g; s/\([:{;,]\) /\1/g; s/ {/{/g; s/\/\*.*\*\///g; /^$/d' | sed -e :a -e '$!N; s/\n\(.\)/\1/; ta' | tr '\n' ' ' > $BUILD_DIR/_assets/css/styles.min.css
 
 echo -e "${yellow}Copying over page content files to '$BUILD_DIR'${end}"
 
-cp -r content/* $BUILD_DIR
+cp -r content/* "$BUILD_DIR"
 
 echo -e "${yellow}Building the front-end using Lume and '_config.ts'${end}"
 
-cp config/lume.config.ts _config.ts
+cp 'config/lume.config.ts' '_config.ts'
 deno task lume
-rm _config.ts
+rm '_config.ts'
 
 echo -e "${yellow}Updating '$PUBLIC_DIR/sitemap.xml' to use the production URL${end}"
 
-sed -i -e "s/http:\/\/localhost\//https:\/\/murty.au\//g" $PUBLIC_DIR/sitemap.xml
-rm -rf $PUBLIC_DIR/sitemap.xml-e
+sed -i -e "s/http:\/\/localhost\//https:\/\/murty.au\//g" "$PUBLIC_DIR/sitemap.xml"
+rm -rf "$PUBLIC_DIR/sitemap.xml-e"
 
 echo -e "${yellow}Configuring GitHub Pages in the '$PUBLIC_DIR' directory${end}"
 
@@ -86,7 +86,7 @@ echo -e "${yellow}Copying CSS files to the '$PUBLIC_DIR/css' directory${end}"
 
 mkdir -p "$PUBLIC_DIR/css"
 cp "$BUILD_DIR/_assets/css/styles.min.css" "$PUBLIC_DIR/css/styles.min.css"
-cp -r "src/styles/fontawesome" $PUBLIC_DIR/css
+cp -r "src/styles/fontawesome" "$PUBLIC_DIR/css"
 
 echo -e "${yellow}Building the JSON Feed for Brendan's posts${end}"
 

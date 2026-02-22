@@ -13,7 +13,7 @@ end="\033[0m"
 
 # Figure out the next version number
 
-NEXT_VERSION=$(date +%Y%m%d.%H%M)
+NEXT_VERSION="$(date +%Y%m%d.%H%M)"
 
 # Ask for confirmation from the user before continuing
 
@@ -47,7 +47,7 @@ git commit -m "Release $NEXT_VERSION"
 
 echo -e "${blue}Tagging commit and pushing changes...${end}"
 
-git tag $NEXT_VERSION
+git tag "$NEXT_VERSION"
 git push --quiet
 git push --tags --quiet
 

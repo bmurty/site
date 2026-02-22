@@ -5,8 +5,8 @@
 
 # Figure out the post date values based on the local machine's date
 
-date_slug=$(date +%Y%m%d)
-date_prop=$(date +%Y-%m-%d)
+date_slug="$(date +%Y%m%d)"
+date_prop="$(date +%Y-%m-%d)"
 
 # Prompt the user for the initial content
 
