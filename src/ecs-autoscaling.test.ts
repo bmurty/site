@@ -88,7 +88,7 @@ Deno.test("ECS Auto-Scaling Configuration Files", async (test) => {
     // Basic YAML validation - check it can be read and has expected structure
     const content = Deno.readTextFileSync(filePath);
     assertEquals(
-      content.includes("name: Deploy ECS Auto Scaling"),
+      content.includes("name: Deploy to AWS"),
       true,
       "Workflow should have correct name",
     );
