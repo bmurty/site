@@ -100,7 +100,7 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
 
     const content = Deno.readTextFileSync(filePath);
     assertEquals(
-      content.includes("name: Deploy to AWS"),
+      content.includes("name: Deploy - AWS"),
       true,
       "Workflow should have correct name",
     );
