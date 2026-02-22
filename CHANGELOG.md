@@ -1,1 +1,0 @@
-- [Dev script code style improvements](https://github.com/bmurty/site/commit/4a2c0af)

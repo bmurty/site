@@ -39,14 +39,11 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-echo -e "${blue}Generating release notes${end}"
-
-deno task release-notes CHANGELOG.md
-git add CHANGELOG.md
-git commit -m "Release $NEXT_VERSION"
+# Push up Git commit and tag that will trigger the GitHub Actions 'release.yml' workflow
 
 echo -e "${blue}Tagging commit and pushing changes...${end}"
 
+git commit --allow-empty -m "Release $NEXT_VERSION"
 git tag "$NEXT_VERSION"
 git push --quiet
 git push --tags --quiet

@@ -6,7 +6,7 @@
 # If an argument is provided when calling this script,
 # like "deno task release-notes changes.log", save the output
 # to that file, otherwise set a suitable default.
-RELEASE_FILE=${1:-"./CHANGELOG.md"}
+RELEASE_FILE=${1:-"./release-notes.log"}
 
 git fetch --tags
 
