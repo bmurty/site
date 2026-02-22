@@ -20,12 +20,12 @@ on:
       max_task_count:
         description: 'Maximum Task Count'
         required: false
-        default: '10'
+        default: '3'
         type: string
       aws_region:
         description: 'AWS Region'
         required: false
-        default: 'us-east-1'
+        default: 'ap-southeast-2'
         type: string
 
 jobs:

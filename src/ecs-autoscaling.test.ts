@@ -100,7 +100,7 @@ Deno.test("ECS Auto-Scaling Configuration Files", async (test) => {
   });
 
   await test.step("README exists", () => {
-    const filePath = `${projectRoot}/ECS-AUTOSCALING-README.md`;
+    const filePath = `${projectRoot}/docs/ECS-AUTOSCALING-README.md`;
     assertEquals(
       existsSync(filePath),
       true,

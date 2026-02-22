@@ -26,6 +26,23 @@ TARGET_MEMORY="${TARGET_MEMORY:-80}"
 SCALE_OUT_COOLDOWN="${SCALE_OUT_COOLDOWN:-60}"
 SCALE_IN_COOLDOWN="${SCALE_IN_COOLDOWN:-300}"
 
+# Prompt for AWS credentials
+echo -e "${YELLOW}AWS CLI Configuration${NC}"
+echo "Please enter your AWS credentials:"
+echo ""
+
+read -p "AWS Access Key ID: " AWS_ACCESS_KEY_ID
+read -p "AWS Secret Access Key: " -s AWS_SECRET_ACCESS_KEY
+echo ""
+read -p "AWS Region [${AWS_REGION}]: " AWS_REGION_INPUT
+AWS_REGION="${AWS_REGION_INPUT:-$AWS_REGION}"
+
+# Configure AWS CLI with provided credentials
+export AWS_ACCESS_KEY_ID
+export AWS_SECRET_ACCESS_KEY
+export AWS_DEFAULT_REGION="${AWS_REGION}"
+
+echo ""
 echo -e "${GREEN}ECS Auto-Scaling Deployment Script${NC}"
 echo "======================================"
 
