@@ -82,7 +82,7 @@
       "description": "Deploy to AWS ECS.",
       "command": "bash ./infra/deploy-aws.sh"
     },
-    "web": {
+    "serve": {
       "description": "Start a web server to show the built site.",
       "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public"
     },

@@ -10,7 +10,7 @@ All commands are run via `deno task <command>`:
 - **Test**: `deno task test` - Run all tests in the `src/` directory
   - Single test: `deno test --allow-run=deno --allow-env --allow-read --allow-net src/<filename>.test.ts`
 - **Lint**: `deno task lint` - Run Deno lint and format
-- **Local server**: `deno task web` - Serve built site from `public/` directory on port 8000
+- **Local server**: `deno task serve` - Serve built site from `public/` directory on port 8000
 
 Other useful commands:
 

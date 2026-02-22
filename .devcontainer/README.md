@@ -42,7 +42,7 @@ After the container is running, you can use all the Deno tasks defined in `deno.
 ```bash
 deno task              # List all available tasks
 deno task build        # Build the site
-deno task web          # Start development server
+deno task serve          # Start development server
 deno task test         # Run tests
 deno task lint         # Lint and format code
 ```
