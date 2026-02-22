@@ -1,6 +1,1 @@
-- [Update name of web server command](https://github.com/bmurty/site/commit/13aad23)
-- [Apply lint fixes](https://github.com/bmurty/site/commit/66ab9a7)
-- [Move Docker config and docs to new subdir, update Deno Tasks](https://github.com/bmurty/site/commit/6fb2148)
-- [Move infra scripts, config and docs in to the same new subdir](https://github.com/bmurty/site/commit/51e6d44)
-- [Add ECS auto-scaling configuration with CloudFormation and Terraform (#9)](https://github.com/bmurty/site/commit/8e7fbe4)
-- [Load in env file for use in Dev Container](https://github.com/bmurty/site/commit/6a19c7c)
+- [Dev script code style improvements](https://github.com/bmurty/site/commit/4a2c0af)
