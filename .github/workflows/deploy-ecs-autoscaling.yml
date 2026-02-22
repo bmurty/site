@@ -1,0 +1,93 @@
+name: Deploy ECS Auto Scaling
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type "deploy" to confirm deployment of auto-scaling configuration'
+        required: true
+        type: string
+      ecs_cluster_name:
+        description: 'ECS Cluster Name'
+        required: true
+        type: string
+      ecs_service_name:
+        description: 'ECS Service Name'
+        required: true
+        default: 'murty-site-service'
+        type: string
+      min_task_count:
+        description: 'Minimum Task Count'
+        required: false
+        default: '1'
+        type: string
+      max_task_count:
+        description: 'Maximum Task Count'
+        required: false
+        default: '3'
+        type: string
+      aws_region:
+        description: 'AWS Region'
+        required: false
+        default: 'ap-southeast-2'
+        type: string
+
+jobs:
+  deploy-autoscaling:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    
+    steps:
+      - name: Confirm deployment
+        run: |
+          if [ "${{ inputs.confirm }}" != "deploy" ]; then
+            echo "::error::Deployment not confirmed. Please type 'deploy' in the confirm field."
+            exit 1
+          fi
+          echo "Deployment confirmed. Proceeding with auto-scaling configuration..."
+      
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ inputs.aws_region }}
+      
+      - name: Validate CloudFormation template
+        run: |
+          aws cloudformation validate-template \
+            --template-body file://ecs-autoscaling.cloudformation.yaml
+      
+      - name: Deploy Auto Scaling Stack
+        run: |
+          aws cloudformation deploy \
+            --stack-name murty-site-autoscaling \
+            --template-file ecs-autoscaling.cloudformation.yaml \
+            --parameter-overrides \
+              ECSClusterName=${{ inputs.ecs_cluster_name }} \
+              ECSServiceName=${{ inputs.ecs_service_name }} \
+              MinTaskCount=${{ inputs.min_task_count }} \
+              MaxTaskCount=${{ inputs.max_task_count }} \
+            --capabilities CAPABILITY_IAM \
+            --region ${{ inputs.aws_region }}
+      
+      - name: Describe Stack
+        if: success()
+        run: |
+          aws cloudformation describe-stacks \
+            --stack-name murty-site-autoscaling \
+            --region ${{ inputs.aws_region }} \
+            --query 'Stacks[0].Outputs'
+      
+      - name: Verify Scaling Policies
+        if: success()
+        run: |
+          echo "Verifying scaling policies for service/${{ inputs.ecs_cluster_name }}/${{ inputs.ecs_service_name }}"
+          aws application-autoscaling describe-scaling-policies \
+            --service-namespace ecs \
+            --resource-id service/${{ inputs.ecs_cluster_name }}/${{ inputs.ecs_service_name }} \
+            --region ${{ inputs.aws_region }}

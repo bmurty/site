@@ -76,6 +76,8 @@ docker-compose run dev sh
 
 ## Deployment to AWS ECS
 
+For auto-scaling configuration, see [ECS-AUTOSCALING.md](ECS-AUTOSCALING.md).
+
 ### 1. Build and Tag for ECR
 
 ```bash

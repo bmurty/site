@@ -1,0 +1,181 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Auto Scaling configuration for murty-site ECS Service
+
+Parameters:
+  ECSClusterName:
+    Type: String
+    Description: Name of the ECS cluster
+    Default: murty-site-cluster
+  
+  ECSServiceName:
+    Type: String
+    Description: Name of the ECS service
+    Default: murty-site-service
+  
+  MinTaskCount:
+    Type: Number
+    Description: Minimum number of tasks
+    Default: 1
+    MinValue: 1
+  
+  MaxTaskCount:
+    Type: Number
+    Description: Maximum number of tasks
+    Default: 10
+    MinValue: 1
+  
+  TargetCPUUtilization:
+    Type: Number
+    Description: Target CPU utilization percentage for scaling
+    Default: 70
+    MinValue: 1
+    MaxValue: 100
+  
+  TargetMemoryUtilization:
+    Type: Number
+    Description: Target memory utilization percentage for scaling
+    Default: 80
+    MinValue: 1
+    MaxValue: 100
+  
+  ScaleOutCooldown:
+    Type: Number
+    Description: Cooldown period in seconds after scale out
+    Default: 60
+  
+  ScaleInCooldown:
+    Type: Number
+    Description: Cooldown period in seconds after scale in
+    Default: 300
+
+Resources:
+  # Application Auto Scaling Target
+  ECSServiceScalingTarget:
+    Type: AWS::ApplicationAutoScaling::ScalableTarget
+    Properties:
+      MaxCapacity: !Ref MaxTaskCount
+      MinCapacity: !Ref MinTaskCount
+      ResourceId: !Sub 'service/${ECSClusterName}/${ECSServiceName}'
+      ScalableDimension: ecs:service:DesiredCount
+      ServiceNamespace: ecs
+
+  # CPU-based Target Tracking Scaling Policy
+  ECSServiceScalingPolicyCPU:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: murty-site-cpu-scaling-policy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref ECSServiceScalingTarget
+      TargetTrackingScalingPolicyConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ECSServiceAverageCPUUtilization
+        TargetValue: !Ref TargetCPUUtilization
+        ScaleOutCooldown: !Ref ScaleOutCooldown
+        ScaleInCooldown: !Ref ScaleInCooldown
+
+  # Memory-based Target Tracking Scaling Policy
+  ECSServiceScalingPolicyMemory:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: murty-site-memory-scaling-policy
+      PolicyType: TargetTrackingScaling
+      ScalingTargetId: !Ref ECSServiceScalingTarget
+      TargetTrackingScalingPolicyConfiguration:
+        PredefinedMetricSpecification:
+          PredefinedMetricType: ECSServiceAverageMemoryUtilization
+        TargetValue: !Ref TargetMemoryUtilization
+        ScaleOutCooldown: !Ref ScaleOutCooldown
+        ScaleInCooldown: !Ref ScaleInCooldown
+
+  # Step Scaling Policy for CPU (Advanced scaling)
+  ECSServiceScalingPolicyCPUStepUp:
+    Type: AWS::ApplicationAutoScaling::ScalingPolicy
+    Properties:
+      PolicyName: murty-site-cpu-step-scaling-up
+      PolicyType: StepScaling
+      ScalingTargetId: !Ref ECSServiceScalingTarget
+      StepScalingPolicyConfiguration:
+        AdjustmentType: PercentChangeInCapacity
+        Cooldown: !Ref ScaleOutCooldown
+        MetricAggregationType: Average
+        StepAdjustments:
+          - MetricIntervalLowerBound: 0
+            MetricIntervalUpperBound: 10
+            ScalingAdjustment: 10
+          - MetricIntervalLowerBound: 10
+            MetricIntervalUpperBound: 20
+            ScalingAdjustment: 20
+          - MetricIntervalLowerBound: 20
+            ScalingAdjustment: 30
+
+  # CloudWatch Alarm for High CPU (triggers step scaling)
+  ECSServiceHighCPUAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: murty-site-high-cpu
+      AlarmDescription: Trigger scaling when CPU is high
+      MetricName: CPUUtilization
+      Namespace: AWS/ECS
+      Statistic: Average
+      Period: 60
+      EvaluationPeriods: 2
+      Threshold: 85
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: ServiceName
+          Value: !Ref ECSServiceName
+        - Name: ClusterName
+          Value: !Ref ECSClusterName
+      AlarmActions:
+        - !Ref ECSServiceScalingPolicyCPUStepUp
+
+  # CloudWatch Alarm for High Memory
+  ECSServiceHighMemoryAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: murty-site-high-memory
+      AlarmDescription: Alert when memory utilization is high
+      MetricName: MemoryUtilization
+      Namespace: AWS/ECS
+      Statistic: Average
+      Period: 60
+      EvaluationPeriods: 2
+      Threshold: 90
+      ComparisonOperator: GreaterThanThreshold
+      Dimensions:
+        - Name: ServiceName
+          Value: !Ref ECSServiceName
+        - Name: ClusterName
+          Value: !Ref ECSClusterName
+      TreatMissingData: notBreaching
+
+Outputs:
+  ScalingTargetId:
+    Description: The Application Auto Scaling Target ID
+    Value: !Ref ECSServiceScalingTarget
+    Export:
+      Name: !Sub '${AWS::StackName}-ScalingTargetId'
+  
+  CPUScalingPolicyARN:
+    Description: ARN of the CPU-based scaling policy
+    Value: !Ref ECSServiceScalingPolicyCPU
+    Export:
+      Name: !Sub '${AWS::StackName}-CPUScalingPolicyARN'
+  
+  MemoryScalingPolicyARN:
+    Description: ARN of the Memory-based scaling policy
+    Value: !Ref ECSServiceScalingPolicyMemory
+    Export:
+      Name: !Sub '${AWS::StackName}-MemoryScalingPolicyARN'
+  
+  HighCPUAlarmARN:
+    Description: ARN of the High CPU CloudWatch Alarm
+    Value: !GetAtt ECSServiceHighCPUAlarm.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-HighCPUAlarmARN'
+  
+  HighMemoryAlarmARN:
+    Description: ARN of the High Memory CloudWatch Alarm
+    Value: !GetAtt ECSServiceHighMemoryAlarm.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-HighMemoryAlarmARN'
