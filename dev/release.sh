@@ -43,7 +43,6 @@ fi
 
 echo -e "${blue}Tagging commit and pushing changes...${end}"
 
-git commit --allow-empty -m "Release $NEXT_VERSION"
 git tag "$NEXT_VERSION"
 git push --quiet
 git push --tags --quiet
