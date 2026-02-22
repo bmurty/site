@@ -1,20 +1,11 @@
-/**
- * Tests for AWS ECS Deployment configuration files
- */
+// Tests for AWS ECS Deployment configuration files
 
 import { assertEquals } from "@std/assert";
 import { existsSync } from "@std/fs";
-import { load } from "@std/dotenv";
 
 const projectRoot = Deno.cwd();
 
 Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
-  await load({ export: true });
-
-  const awsRegion = Deno.env.get("AWS_REGION") || "ap-southeast-2";
-  const ecsClusterName = Deno.env.get("ECS_CLUSTER_NAME") || "murty-site-cluster";
-  const ecsServiceName = Deno.env.get("ECS_SERVICE_NAME") || "murty-site-service";
-
   await test.step("CloudFormation template exists", () => {
     const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.cloudformation.yaml`;
     assertEquals(
@@ -66,15 +57,6 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
     assertEquals(existsSync(filePath), true, "AWS ECS documentation should exist");
   });
 
-  await test.step("Deployment script exists and is executable", () => {
-    const filePath = `${projectRoot}/infra/aws-ecs/deploy-aws.sh`;
-    assertEquals(existsSync(filePath), true, "Deployment script should exist");
-
-    const fileInfo = Deno.statSync(filePath);
-    const isExecutable = (fileInfo.mode! & 0o111) !== 0;
-    assertEquals(isExecutable, true, "Deployment script should be executable");
-  });
-
   await test.step("GitHub Actions workflow exists and is valid", () => {
     const filePath = `${projectRoot}/.github/workflows/deploy-aws.yml`;
     assertEquals(existsSync(filePath), true, "GitHub Actions workflow should exist");
@@ -82,18 +64,6 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
     const content = Deno.readTextFileSync(filePath);
     assertEquals(content.includes("name: Deploy - AWS"), true, "Workflow should have correct name");
     assertEquals(content.includes("workflow_dispatch"), true, "Workflow should be manually dispatchable");
-  });
-
-  await test.step("AWS_REGION is set", () => {
-    assertEquals(awsRegion.length > 0, true, "AWS_REGION should not be empty");
-  });
-
-  await test.step("ECS_CLUSTER_NAME is set", () => {
-    assertEquals(ecsClusterName.length > 0, true, "ECS_CLUSTER_NAME should not be empty");
-  });
-
-  await test.step("ECS_SERVICE_NAME is set", () => {
-    assertEquals(ecsServiceName.length > 0, true, "ECS_SERVICE_NAME should not be empty");
   });
 
   await test.step("CloudFormation template has required parameters", () => {

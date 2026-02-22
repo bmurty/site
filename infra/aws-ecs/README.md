@@ -11,27 +11,9 @@ Deploy the murty-site to AWS ECS with auto-scaling using the files in this direc
 - `ecs-task-definition.example.json` - Example ECS task definition
 
 **Deployment:**
-- `deploy.sh` - Bash script for CloudFormation deployment
 - `.github/workflows/deploy-aws.yml` - GitHub Actions workflow
 
 ## Deployment
-
-### Bash Script (Recommended)
-
-```bash
-export ECS_CLUSTER_NAME=your-cluster-name
-bash ./infra/aws-ecs/deploy-aws.sh
-```
-
-Prompts for AWS credentials, validates template, and deploys the stack.
-
-**Environment Variables:**
-- `ECS_CLUSTER_NAME` (required) - ECS cluster name
-- `ECS_SERVICE_NAME` (optional) - Defaults to `murty-site-service`
-- `MIN_TASK_COUNT` (optional) - Defaults to `1`
-- `MAX_TASK_COUNT` (optional) - Defaults to `10`
-- `TARGET_CPU` (optional) - Defaults to `70`
-- `TARGET_MEMORY` (optional) - Defaults to `80`
 
 ### GitHub Actions
 
