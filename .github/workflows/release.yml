@@ -49,7 +49,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
   release:
-    needs: test
+    needs: deploy
     runs-on: ubuntu-latest
     permissions:
       contents: write
