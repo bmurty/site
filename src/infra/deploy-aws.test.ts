@@ -4,10 +4,17 @@
 
 import { assertEquals } from "@std/assert";
 import { existsSync } from "@std/fs";
+import { load } from "@std/dotenv";
 
 const projectRoot = Deno.cwd();
 
 Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
+  await load({ export: true });
+
+  const awsRegion = Deno.env.get("AWS_REGION") || "ap-southeast-2";
+  const ecsClusterName = Deno.env.get("ECS_CLUSTER_NAME") || "murty-site-cluster";
+  const ecsServiceName = Deno.env.get("ECS_SERVICE_NAME") || "murty-site-service";
+
   await test.step("CloudFormation template exists", () => {
     const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.cloudformation.yaml`;
     assertEquals(
@@ -34,20 +41,11 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
       "Example config JSON should exist",
     );
 
-    // Verify it's valid JSON
     const content = Deno.readTextFileSync(filePath);
     const parsed = JSON.parse(content);
     assertEquals(typeof parsed, "object", "Config should be valid JSON");
-    assertEquals(
-      parsed.scaling?.min_tasks,
-      1,
-      "Should have min_tasks configured",
-    );
-    assertEquals(
-      parsed.scaling?.max_tasks,
-      10,
-      "Should have max_tasks configured",
-    );
+    assertEquals(parsed.scaling?.min_tasks, 1, "Should have min_tasks configured");
+    assertEquals(parsed.scaling?.max_tasks, 10, "Should have max_tasks configured");
   });
 
   await test.step("Example task definition exists and is valid", () => {
@@ -65,76 +63,47 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
 
   await test.step("Documentation exists", () => {
     const filePath = `${projectRoot}/infra/aws-ecs/README.md`;
-    assertEquals(
-      existsSync(filePath),
-      true,
-      "AWS ECS documentation should exist",
-    );
+    assertEquals(existsSync(filePath), true, "AWS ECS documentation should exist");
   });
 
   await test.step("Deployment script exists and is executable", () => {
     const filePath = `${projectRoot}/infra/aws-ecs/deploy-aws.sh`;
-    assertEquals(
-      existsSync(filePath),
-      true,
-      "Deployment script should exist",
-    );
+    assertEquals(existsSync(filePath), true, "Deployment script should exist");
 
-    // Check if file is executable
     const fileInfo = Deno.statSync(filePath);
     const isExecutable = (fileInfo.mode! & 0o111) !== 0;
-    assertEquals(
-      isExecutable,
-      true,
-      "Deployment script should be executable",
-    );
+    assertEquals(isExecutable, true, "Deployment script should be executable");
   });
 
-  await test.step("GitHub Actions workflow exists and is valid YAML", () => {
+  await test.step("GitHub Actions workflow exists and is valid", () => {
     const filePath = `${projectRoot}/.github/workflows/deploy-aws.yml`;
-    assertEquals(
-      existsSync(filePath),
-      true,
-      "GitHub Actions workflow should exist",
-    );
+    assertEquals(existsSync(filePath), true, "GitHub Actions workflow should exist");
 
     const content = Deno.readTextFileSync(filePath);
-    assertEquals(
-      content.includes("name: Deploy - AWS"),
-      true,
-      "Workflow should have correct name",
-    );
-    assertEquals(
-      content.includes("workflow_dispatch"),
-      true,
-      "Workflow should be manually dispatchable",
-    );
+    assertEquals(content.includes("name: Deploy - AWS"), true, "Workflow should have correct name");
+    assertEquals(content.includes("workflow_dispatch"), true, "Workflow should be manually dispatchable");
+  });
+
+  await test.step("AWS_REGION is set", () => {
+    assertEquals(awsRegion.length > 0, true, "AWS_REGION should not be empty");
+  });
+
+  await test.step("ECS_CLUSTER_NAME is set", () => {
+    assertEquals(ecsClusterName.length > 0, true, "ECS_CLUSTER_NAME should not be empty");
+  });
+
+  await test.step("ECS_SERVICE_NAME is set", () => {
+    assertEquals(ecsServiceName.length > 0, true, "ECS_SERVICE_NAME should not be empty");
   });
 
   await test.step("CloudFormation template has required parameters", () => {
     const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.cloudformation.yaml`;
     const content = Deno.readTextFileSync(filePath);
 
-    assertEquals(
-      content.includes("ECSClusterName"),
-      true,
-      "Should have ECSClusterName parameter",
-    );
-    assertEquals(
-      content.includes("ECSServiceName"),
-      true,
-      "Should have ECSServiceName parameter",
-    );
-    assertEquals(
-      content.includes("MinTaskCount"),
-      true,
-      "Should have MinTaskCount parameter",
-    );
-    assertEquals(
-      content.includes("MaxTaskCount"),
-      true,
-      "Should have MaxTaskCount parameter",
-    );
+    assertEquals(content.includes("ECSClusterName"), true, "Should have ECSClusterName parameter");
+    assertEquals(content.includes("ECSServiceName"), true, "Should have ECSServiceName parameter");
+    assertEquals(content.includes("MinTaskCount"), true, "Should have MinTaskCount parameter");
+    assertEquals(content.includes("MaxTaskCount"), true, "Should have MaxTaskCount parameter");
   });
 
   await test.step("CloudFormation template has scaling resources", () => {
@@ -151,11 +120,7 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
       true,
       "Should have ScalingPolicy resources",
     );
-    assertEquals(
-      content.includes("AWS::CloudWatch::Alarm"),
-      true,
-      "Should have CloudWatch Alarm resources",
-    );
+    assertEquals(content.includes("AWS::CloudWatch::Alarm"), true, "Should have CloudWatch Alarm resources");
     assertEquals(
       content.includes("ECSServiceAverageCPUUtilization"),
       true,
@@ -172,21 +137,9 @@ Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
     const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.tf`;
     const content = Deno.readTextFileSync(filePath);
 
-    assertEquals(
-      content.includes("aws_appautoscaling_target"),
-      true,
-      "Should have autoscaling target",
-    );
-    assertEquals(
-      content.includes("aws_appautoscaling_policy"),
-      true,
-      "Should have autoscaling policies",
-    );
-    assertEquals(
-      content.includes("aws_cloudwatch_metric_alarm"),
-      true,
-      "Should have CloudWatch alarms",
-    );
+    assertEquals(content.includes("aws_appautoscaling_target"), true, "Should have autoscaling target");
+    assertEquals(content.includes("aws_appautoscaling_policy"), true, "Should have autoscaling policies");
+    assertEquals(content.includes("aws_cloudwatch_metric_alarm"), true, "Should have CloudWatch alarms");
     assertEquals(
       content.includes("ECSServiceAverageCPUUtilization"),
       true,

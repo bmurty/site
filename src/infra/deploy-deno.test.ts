@@ -6,10 +6,13 @@
  * environments that don't have Deno Deploy configured.
  */
 
+import { load } from "@std/dotenv";
 import { assertEquals, assertMatch } from "@std/assert";
 import { existsSync } from "@std/fs";
 
 const projectRoot = Deno.cwd();
+
+await load({ export: true });
 
 const DENO_DEPLOY_TOKEN = Deno.env.get("DENO_DEPLOY_TOKEN");
 const DENO_DEPLOY_PROJECT = Deno.env.get("DENO_DEPLOY_PROJECT");
@@ -50,7 +53,7 @@ Deno.test("Deno Deploy Configuration", async (test) => {
 
   await test.step("DENO_DEPLOY_TOKEN is set", () => {
     if (!credentialsAvailable) {
-      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set");
+      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
       return;
     }
 
@@ -60,7 +63,7 @@ Deno.test("Deno Deploy Configuration", async (test) => {
 
   await test.step("DENO_DEPLOY_PROJECT is set", () => {
     if (!credentialsAvailable) {
-      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set");
+      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
       return;
     }
 
@@ -74,7 +77,7 @@ Deno.test("Deno Deploy Configuration", async (test) => {
 
   await test.step("token authenticates successfully against Deno Deploy API", async () => {
     if (!credentialsAvailable) {
-      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set");
+      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
       return;
     }
 
@@ -112,7 +115,7 @@ Deno.test("Deno Deploy Configuration", async (test) => {
 
   await test.step("project name matches API response", async () => {
     if (!credentialsAvailable) {
-      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set");
+      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
       return;
     }
 
