@@ -45,8 +45,9 @@ fi
 
 # Check deployctl is available
 if ! command -v deployctl &>/dev/null; then
-  echo -e "${YELLOW}deployctl not found, installing...${NC}"
-  deno install -gArf jsr:@deno/deployctl
+  echo -e "${RED}Error: Deno deployctl not found${NC}"
+  echo "Run 'deno task setup' first."
+  exit 1
 fi
 
 echo -e "${GREEN}Deno Deploy Deployment${NC}"
@@ -56,7 +57,7 @@ echo "  Site dir:   $SITE_DIR"
 echo "  Entrypoint: $ENTRYPOINT"
 echo ""
 
-read -r -p "Deploy to Deno Deploy? [y/N] " CONFIRM
+read -r -p "Deploy to Deno Deploy now? [y/N] " CONFIRM
 if [[ ! "$CONFIRM" =~ ^[yY]$ ]]; then
   echo -e "${YELLOW}Deployment cancelled.${NC}"
   exit 0

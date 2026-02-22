@@ -23,6 +23,7 @@
     ]
   },
   "imports": {
+    "@deno/deployctl": "jsr:@deno/deployctl@^1.13.1",
     "@gnome/exec": "jsr:@gnome/exec@^0.6.0",
     "@std/assert": "jsr:@std/assert@^1.0.19",
     "@std/datetime": "jsr:@std/datetime@^0.225.7",

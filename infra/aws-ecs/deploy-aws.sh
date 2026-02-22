@@ -27,7 +27,7 @@ SCALE_OUT_COOLDOWN="${SCALE_OUT_COOLDOWN:-60}"
 SCALE_IN_COOLDOWN="${SCALE_IN_COOLDOWN:-300}"
 
 # Confirmation prompt (defaults to no)
-echo -e "${YELLOW}Deploy ECS auto-scaling configuration to AWS?${NC}"
+echo -e "${YELLOW}Deploy to AWS ECS now?${NC}"
 read -r -p "Continue? [y/N] " CONFIRM
 CONFIRM="${CONFIRM:-n}"
 

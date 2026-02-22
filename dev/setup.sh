@@ -23,9 +23,9 @@ echo 'OK - Environment config file exists at ./.env'
 # Attempt to install and configure direnv
 
 if which direnv ; then
-    direnv allow
+  direnv allow
 
-    echo 'OK - direnv is installed and configured'
+  echo 'OK - direnv is installed and configured'
 else
   curl -sfL https://direnv.net/install.sh | bash
   echo "$HOME/.local/bin" >> "$GITHUB_PATH"
