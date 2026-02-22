@@ -1,10 +1,13 @@
 {
   "name": "Murty Website",
+  "runArgs": [
+    "--env-file",
+    "${localWorkspaceFolder}/.env"
+  ],
   "build": {
     "dockerfile": "Dockerfile",
     "context": "."
   },
-  // Configure tool-specific properties
   "customizations": {
     "vscode": {
       "settings": {
@@ -23,7 +26,6 @@
       ]
     }
   },
-  // Forward port 8000 for the development server
   "forwardPorts": [
     8000
   ],
@@ -33,15 +35,11 @@
       "onAutoForward": "notify"
     }
   },
-  // Post-create command to setup the environment
   "postCreateCommand": "deno task setup && deno task build",
-  // Ensure Deno cache directory is writable by the deno user
   "containerEnv": {
     "DENO_DIR": "/home/deno/.cache/deno"
   },
-  // Use deno user for security best practices
   "remoteUser": "deno",
-  // Mount the workspace with appropriate permissions
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "workspaceFolder": "/workspace"
 }
