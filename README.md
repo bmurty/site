@@ -6,7 +6,7 @@
 
 ## Summary
 
-This repository contains the [murty.au](https://murty.au/) website, which has been built with [Deno](https://deno.land/), [Lume](https://lumeland.github.io/), a commercially licensed version of the [IO font by Mass-Driver](https://io.mass-driver.com/), and the [Font Awesome free icon pack](https://fontawesome.com/).
+This repository contains the [murty.au](https://murty.au/) website, which has been built with [Deno](https://deno.land/), [Lume](https://lumeland.github.io/), a licensed version of the [IO font by Mass-Driver](https://io.mass-driver.com/), and the free [Font Awesome icon pack](https://fontawesome.com/).
 
 Tests, build and local server commands are available from local environments.
 
@@ -14,7 +14,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 
 ## Folder Structure
 
-| Folder / File | Description |
+| Path | Description |
 | ---- | ---- |
 | [.github/actions](.github/actions/) | Helper actions for GitHub Actions workflows |
 | [.github/workflows/release.yml](.github/workflows/release.yml) | Triggers when a release tag is pushed. Runs tests, deploys to [GitHub Pages](https://pages.github.com/) and publishes a new [GitHub release](https://github.com/bmurty/site/releases). |
