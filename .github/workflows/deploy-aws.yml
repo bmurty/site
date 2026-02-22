@@ -54,12 +54,12 @@ jobs:
       - name: Validate CloudFormation template
         run: |
           aws cloudformation validate-template \
-            --template-body file://infra/ecs-autoscaling.cloudformation.yaml
+            --template-body file://infra/aws-ecs/ecs-autoscaling.cloudformation.yaml
       - name: Deploy Auto Scaling Stack
         run: |
           aws cloudformation deploy \
             --stack-name murty-site-autoscaling \
-            --template-file infra/ecs-autoscaling.cloudformation.yaml \
+            --template-file infra/aws-ecs/ecs-autoscaling.cloudformation.yaml \
             --parameter-overrides \
               ECSClusterName=${{ inputs.ecs_cluster_name }} \
               ECSServiceName=${{ inputs.ecs_service_name }} \

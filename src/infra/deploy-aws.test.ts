@@ -1,5 +1,5 @@
 /**
- * Tests for AWS Deployment configuration files
+ * Tests for AWS ECS Deployment configuration files
  */
 
 import { assertEquals } from "@std/assert";
@@ -7,9 +7,9 @@ import { existsSync } from "@std/fs";
 
 const projectRoot = Deno.cwd();
 
-Deno.test("AWS Deployment Configuration Files", async (test) => {
+Deno.test("AWS ECS Deployment Configuration Files", async (test) => {
   await test.step("CloudFormation template exists", () => {
-    const filePath = `${projectRoot}/infra/ecs-autoscaling.cloudformation.yaml`;
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.cloudformation.yaml`;
     assertEquals(
       existsSync(filePath),
       true,
@@ -18,7 +18,7 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
   });
 
   await test.step("Terraform configuration exists", () => {
-    const filePath = `${projectRoot}/infra/ecs-autoscaling.tf`;
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.tf`;
     assertEquals(
       existsSync(filePath),
       true,
@@ -27,7 +27,7 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
   });
 
   await test.step("Example config JSON exists and is valid", () => {
-    const filePath = `${projectRoot}/infra/ecs-autoscaling-config.example.json`;
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling-config.example.json`;
     assertEquals(
       existsSync(filePath),
       true,
@@ -50,17 +50,30 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
     );
   });
 
-  await test.step("Documentation exists", () => {
-    const filePath = `${projectRoot}/infra/README.md`;
+  await test.step("Example task definition exists and is valid", () => {
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-task-definition.example.json`;
     assertEquals(
       existsSync(filePath),
       true,
-      "Auto-scaling documentation should exist",
+      "Example task definition should exist",
+    );
+
+    const content = Deno.readTextFileSync(filePath);
+    const parsed = JSON.parse(content);
+    assertEquals(typeof parsed, "object", "Task definition should be valid JSON");
+  });
+
+  await test.step("Documentation exists", () => {
+    const filePath = `${projectRoot}/infra/aws-ecs/README.md`;
+    assertEquals(
+      existsSync(filePath),
+      true,
+      "AWS ECS documentation should exist",
     );
   });
 
   await test.step("Deployment script exists and is executable", () => {
-    const filePath = `${projectRoot}/infra/deploy-aws.sh`;
+    const filePath = `${projectRoot}/infra/aws-ecs/deploy-aws.sh`;
     assertEquals(
       existsSync(filePath),
       true,
@@ -85,7 +98,6 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
       "GitHub Actions workflow should exist",
     );
 
-    // Basic YAML validation - check it can be read and has expected structure
     const content = Deno.readTextFileSync(filePath);
     assertEquals(
       content.includes("name: Deploy to AWS"),
@@ -100,10 +112,9 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
   });
 
   await test.step("CloudFormation template has required parameters", () => {
-    const filePath = `${projectRoot}/infra/ecs-autoscaling.cloudformation.yaml`;
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.cloudformation.yaml`;
     const content = Deno.readTextFileSync(filePath);
 
-    // Check for key parameters
     assertEquals(
       content.includes("ECSClusterName"),
       true,
@@ -127,10 +138,9 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
   });
 
   await test.step("CloudFormation template has scaling resources", () => {
-    const filePath = `${projectRoot}/infra/ecs-autoscaling.cloudformation.yaml`;
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.cloudformation.yaml`;
     const content = Deno.readTextFileSync(filePath);
 
-    // Check for required resources
     assertEquals(
       content.includes("AWS::ApplicationAutoScaling::ScalableTarget"),
       true,
@@ -159,10 +169,9 @@ Deno.test("AWS Deployment Configuration Files", async (test) => {
   });
 
   await test.step("Terraform configuration has required resources", () => {
-    const filePath = `${projectRoot}/infra/ecs-autoscaling.tf`;
+    const filePath = `${projectRoot}/infra/aws-ecs/ecs-autoscaling.tf`;
     const content = Deno.readTextFileSync(filePath);
 
-    // Check for key resources
     assertEquals(
       content.includes("aws_appautoscaling_target"),
       true,

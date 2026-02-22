@@ -78,9 +78,13 @@
       "description": "Generates content for the GitHub Release description.",
       "command": "bash ./dev/release-notes.sh"
     },
+    "deploy-deno": {
+      "description": "Deploy to Deno Deploy.",
+      "command": "bash ./infra/deno-deploy/deploy-deno.sh"
+    },
     "deploy-aws": {
       "description": "Deploy to AWS ECS.",
-      "command": "bash ./infra/deploy-aws.sh"
+      "command": "bash ./infra/aws-ecs/deploy-aws.sh"
     },
     "serve": {
       "description": "Start a web server to show the built site.",

@@ -7,7 +7,9 @@ $RECYCLE.BIN/
 .env
 .env.*
 !.env.example
-infra/ecs-task-definition.json
+
+infra/aws-ecs/ecs-autoscaling-config.json
+infra/aws-ecs/ecs-task-definition.json
 
 !.envrc
 

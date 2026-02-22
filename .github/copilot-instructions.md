@@ -51,6 +51,9 @@ The build is orchestrated by `dev/build.sh` which:
 - **`assets/`**: Static files (fonts, images, PDFs, favicon, etc.)
 - **`config/`**: Configuration files (Lume config, robots.txt, security.txt, keybase.txt)
 - **`dev/`**: Bash dev scripts for build automation
+- **`infra/`**: Deployment infrastructure
+  - `infra/aws-ecs/`: AWS ECS deployment (CloudFormation, Terraform, task definition)
+  - `infra/deno-deploy/`: Deno Deploy deployment (deployctl)
 - **`public/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
 

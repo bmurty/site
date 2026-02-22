@@ -25,7 +25,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
 | [dev](dev/) | Dev helper scripts, run `deno task` to show available options. |
 | [docker](docker/) | Docker configuration and documentation. See [docker/README.md](docker/README.md) for details. |
-| [infra](infra/) | AWS ECS infrastructure files (CloudFormation, Terraform, task definitions). |
+| [infra](infra/) | Deployment infrastructure. See [infra/README.md](infra/README.md) for details. |
 | [src](src/) | Source code and related unit tests. |
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |

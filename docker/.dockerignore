@@ -13,8 +13,8 @@ node_modules/
 
 # Environment files (will be handled separately)
 .env
-infra/ecs-task-definition.json
-infra/ecs-task-definition.example.json
+infra/aws-ecs/ecs-task-definition.json
+infra/aws-ecs/ecs-task-definition.example.json
 
 # IDE and editor files
 .vscode/

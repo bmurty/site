@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 
 # Default values
 STACK_NAME="${STACK_NAME:-murty-site-autoscaling}"
-TEMPLATE_FILE="${TEMPLATE_FILE:-infra/ecs-autoscaling.cloudformation.yaml}"
+TEMPLATE_FILE="${TEMPLATE_FILE:-infra/aws-ecs/ecs-autoscaling.cloudformation.yaml}"
 AWS_REGION="${AWS_REGION:-us-east-1}"
 
 # Required parameters
@@ -53,7 +53,7 @@ if [ -z "$ECS_CLUSTER_NAME" ]; then
     echo "Usage:"
     echo "  export ECS_CLUSTER_NAME=your-cluster-name"
     echo "  export ECS_SERVICE_NAME=your-service-name  # Optional, defaults to murty-site-service"
-    echo "  ./infra/deploy-aws.sh"
+    echo "  bash ./infra/aws-ecs/deploy-aws.sh"
     echo ""
     echo "Optional environment variables:"
     echo "  MIN_TASK_COUNT (default: 1)"
