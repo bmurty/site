@@ -6,7 +6,6 @@ RUN apt-get update && apt-get install -y \
   curl \
   git \
   git-lfs \
-  direnv \
   ca-certificates \
   bash \
   sudo \
@@ -28,9 +27,6 @@ RUN mkdir -p /home/deno/.cache/deno \
 
 # Switch to deno user
 USER deno
-
-# Configure direnv for automatic loading
-RUN echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
 
 # Set up working directory
 WORKDIR /workspace

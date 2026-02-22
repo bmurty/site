@@ -22,7 +22,7 @@ jobs:
           name: ${{ steps.build-site.outputs.artifact-file-name }}
       - name: Run tests
         shell: bash
-        run: ./bin/deno task test
+        run: deno task test
   deploy:
     needs: test
     runs-on: ubuntu-latest

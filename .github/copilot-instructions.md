@@ -130,10 +130,6 @@ Releases use date-based version tags: `YYYYMMDD.HHMM` (e.g., `20240221.1430`)
 - Triggers the `.github/workflows/release.yml` workflow
 - Workflow runs tests, deploys to GitHub Pages, and creates a GitHub release
 
-### Binary Files
-
-The `bin/` directory contains platform-specific Deno binaries managed by Git LFS to ensure environment consistency across CI/CD and local development.
-
 ### Docker
 
 Docker support is available via `docker/docker-compose.yaml`:
