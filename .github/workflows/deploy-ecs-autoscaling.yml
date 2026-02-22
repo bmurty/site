@@ -3,6 +3,10 @@ name: Deploy ECS Auto Scaling
 on:
   workflow_dispatch:
     inputs:
+      confirm:
+        description: 'Type "deploy" to confirm deployment of auto-scaling configuration'
+        required: true
+        type: string
       ecs_cluster_name:
         description: 'ECS Cluster Name'
         required: true
@@ -36,6 +40,14 @@ jobs:
       contents: read
     
     steps:
+      - name: Confirm deployment
+        run: |
+          if [ "${{ inputs.confirm }}" != "deploy" ]; then
+            echo "::error::Deployment not confirmed. Please type 'deploy' in the confirm field."
+            exit 1
+          fi
+          echo "Deployment confirmed. Proceeding with auto-scaling configuration..."
+      
       - name: Checkout repository
         uses: actions/checkout@v6
       
