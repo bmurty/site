@@ -29,6 +29,7 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |
 | [src/templates](src/templates/) | Nunjucks page templates. |
+| [AGENTS.md](AGENTS.md) | AI Agent instructions, technical docs and guidance. |
 | [deno.json](deno.json) | [Deno](https://deno.land/) imports, tasks and configuration for this repository. |
 
 ## Initial setup

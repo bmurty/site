@@ -1,4 +1,4 @@
-# Copilot Instructions for murty.au
+# AI Agent Instructions for bmurty/site
 
 This is a static website built with Deno, Lume (static site generator), and deployed to GitHub Pages.
 
