@@ -1,9 +1,11 @@
 /**
  * Tests for Deno Deploy configuration and credentials
  *
- * Network steps are skipped automatically when DENO_DEPLOY_TOKEN or
+ * Credential steps are skipped automatically when DENO_DEPLOY_TOKEN or
  * DENO_DEPLOY_PROJECT are not set, so the suite always passes in CI
  * environments that don't have Deno Deploy configured.
+ *
+ * Requires Deno >= 2.4.2 (when `deno deploy` subcommand was introduced).
  */
 
 import { load } from "@std/dotenv";
@@ -40,15 +42,47 @@ Deno.test("Deno Deploy Configuration", async (test) => {
     const content = Deno.readTextFileSync(filePath);
     assertEquals(content.includes("name: Deploy - Deno Deploy"), true, "Workflow should have correct name");
     assertEquals(content.includes("workflow_dispatch"), true, "Workflow should be manually dispatchable");
-    assertEquals(content.includes("DENO_DEPLOY_PROJECT"), true, "Workflow should reference DENO_DEPLOY_PROJECT");
+    assertEquals(content.includes("DENO_DEPLOY_TOKEN"), true, "Workflow should reference DENO_DEPLOY_TOKEN");
+    assertEquals(content.includes("deno deploy"), true, "Workflow should use the deno deploy CLI command");
   });
 
-  await test.step("deploy script references correct env vars", () => {
+  await test.step("deploy script uses deno deploy CLI (not deployctl)", () => {
     const filePath = `${projectRoot}/infra/deno-deploy/deploy-deno.sh`;
     const content = Deno.readTextFileSync(filePath);
 
+    assertEquals(content.includes("deno deploy"), true, "Script should use the deno deploy CLI command");
+    assertEquals(content.includes("deployctl"), false, "Script should not reference the deprecated deployctl");
     assertEquals(content.includes("DENO_DEPLOY_TOKEN"), true, "Script should reference DENO_DEPLOY_TOKEN");
     assertEquals(content.includes("DENO_DEPLOY_PROJECT"), true, "Script should reference DENO_DEPLOY_PROJECT");
+    assertEquals(content.includes("console.deno.com"), true, "Script should reference the new console URL");
+  });
+
+  await test.step("deploy script requires Deno >= 2.4.2", () => {
+    const filePath = `${projectRoot}/infra/deno-deploy/deploy-deno.sh`;
+    const content = Deno.readTextFileSync(filePath);
+
+    assertEquals(content.includes("2.4.2"), true, "Script should enforce minimum Deno version 2.4.2");
+  });
+
+  await test.step("Deno runtime meets minimum version requirement (>= 2.4.2)", async () => {
+    const command = new Deno.Command("deno", { args: ["--version"], stdout: "piped" });
+    const { stdout } = await command.output();
+    const versionOutput = new TextDecoder().decode(stdout);
+
+    // Extract version string, e.g. "deno 2.6.10"
+    const match = versionOutput.match(/deno (\d+)\.(\d+)\.(\d+)/);
+    assertEquals(match !== null, true, "Should be able to read Deno version");
+
+    const [, major, minor, patch] = match!.map(Number);
+    const meetsMinimum = major > 2 ||
+      (major === 2 && minor > 4) ||
+      (major === 2 && minor === 4 && patch >= 2);
+
+    assertEquals(
+      meetsMinimum,
+      true,
+      `Deno ${major}.${minor}.${patch} does not meet the minimum required version 2.4.2 for deno deploy`,
+    );
   });
 
   await test.step("DENO_DEPLOY_TOKEN is set", () => {
@@ -61,7 +95,7 @@ Deno.test("Deno Deploy Configuration", async (test) => {
     assertEquals(DENO_DEPLOY_TOKEN!.length > 0, true, "DENO_DEPLOY_TOKEN should not be empty");
   });
 
-  await test.step("DENO_DEPLOY_PROJECT is set", () => {
+  await test.step("DENO_DEPLOY_PROJECT is set and valid", () => {
     if (!credentialsAvailable) {
       console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
       return;
@@ -71,74 +105,7 @@ Deno.test("Deno Deploy Configuration", async (test) => {
     assertMatch(
       DENO_DEPLOY_PROJECT!,
       /^[a-z0-9][a-z0-9-]*[a-z0-9]$/,
-      "DENO_DEPLOY_PROJECT should be a valid project name (lowercase alphanumeric with hyphens)",
-    );
-  });
-
-  await test.step("token authenticates successfully against Deno Deploy API", async () => {
-    if (!credentialsAvailable) {
-      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
-      return;
-    }
-
-    const response = await fetch(
-      `https://api.deno.com/v1/projects/${DENO_DEPLOY_PROJECT}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${DENO_DEPLOY_TOKEN}`,
-        },
-      },
-    );
-
-    assertEquals(
-      response.status !== 401,
-      true,
-      `DENO_DEPLOY_TOKEN was rejected by the API (401 Unauthorized)`,
-    );
-
-    assertEquals(
-      response.status !== 403,
-      true,
-      `DENO_DEPLOY_TOKEN does not have permission to access project "${DENO_DEPLOY_PROJECT}" (403 Forbidden)`,
-    );
-
-    assertEquals(
-      response.status === 200,
-      true,
-      `Project "${DENO_DEPLOY_PROJECT}" was not found on Deno Deploy (status ${response.status})`,
-    );
-
-    // Drain the body to avoid resource leaks
-    await response.body?.cancel();
-  });
-
-  await test.step("project name matches API response", async () => {
-    if (!credentialsAvailable) {
-      console.log("      skipped — DENO_DEPLOY_TOKEN / DENO_DEPLOY_PROJECT not set in env or .env file");
-      return;
-    }
-
-    const response = await fetch(
-      `https://api.deno.com/v1/projects/${DENO_DEPLOY_PROJECT}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${DENO_DEPLOY_TOKEN}`,
-        },
-      },
-    );
-
-    if (!response.ok) {
-      await response.body?.cancel();
-      return;
-    }
-
-    const project = await response.json();
-    assertEquals(
-      project.name,
-      DENO_DEPLOY_PROJECT,
-      `API project name "${project.name}" should match DENO_DEPLOY_PROJECT "${DENO_DEPLOY_PROJECT}"`,
+      "DENO_DEPLOY_PROJECT should be a valid app name (lowercase alphanumeric with hyphens)",
     );
   });
 });

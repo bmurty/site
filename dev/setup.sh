@@ -46,19 +46,26 @@ fi
 
 # Setup a local version of the Deno binary
 
+LATEST_DENO=$(curl -fsSL https://dl.deno.land/release-latest.txt | tr -d 'v\n')
+
 if which deno ; then
-  deno upgrade stable || true
+  if ! deno upgrade; then
+    echo "ERROR - Failed to upgrade Deno to $LATEST_DENO without sudo"
+    echo "Required Deno version: $LATEST_DENO"
+    echo "Run manually: sudo deno upgrade"
+    exit 1
+  fi
 
   mkdir -p ./bin
   rm -rf ./bin/deno
   cp $(which deno) ./bin
 
-  echo 'OK - Local Deno updated at ./bin/deno'
+  echo "OK - Local Deno updated to $LATEST_DENO at ./bin/deno"
 else
   if which bin/deno ; then
     echo 'OK - Local Deno found at ./bin/deno'
   else
-    echo 'ERROR - Install Deno first from https://deno.com/'
+    echo "ERROR - Install Deno $LATEST_DENO first from https://deno.com/"
     exit 1
   fi
 fi

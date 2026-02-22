@@ -1273,7 +1273,6 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@deno/deployctl@^1.13.1",
       "jsr:@gnome/exec@0.6",
       "jsr:@std/assert@^1.0.19",
       "jsr:@std/datetime@~0.225.7",

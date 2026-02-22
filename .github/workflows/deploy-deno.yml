@@ -1,4 +1,5 @@
 name: Deploy - Deno Deploy
+
 on:
   workflow_dispatch:
     inputs:
@@ -6,12 +7,14 @@ on:
         description: 'Type "deploy" to confirm deployment to Deno Deploy'
         required: true
         type: string
+
 jobs:
-  deploy-deno:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
       contents: read
+
     steps:
       - name: Confirm deployment
         run: |
@@ -20,20 +23,32 @@ jobs:
             exit 1
           fi
           echo "Deployment confirmed. Proceeding with Deno Deploy..."
+
       - name: Checkout repository
         uses: actions/checkout@v6
         with:
           lfs: true
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
       - name: Build site
         id: build-site
         uses: ./.github/actions/build-site
+
       - name: Download build files
         uses: actions/download-artifact@v7
         with:
           name: ${{ steps.build-site.outputs.artifact-file-name }}
+
       - name: Deploy to Deno Deploy
-        uses: denoland/deployctl@v1
-        with:
-          project: ${{ secrets.DENO_DEPLOY_PROJECT }}
-          entrypoint: jsr:@std/http/file-server
-          root: public
+        env:
+          DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
+        run: |
+          deno deploy \
+            --app=${{ secrets.DENO_DEPLOY_PROJECT }} \
+            --token=$DENO_DEPLOY_TOKEN \
+            --static=public \
+            --prod

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Deploys the built site to Deno Deploy using deployctl
+# Deploys the built site to Deno Deploy using the `deno deploy` CLI command
+#  - Requires Deno >= 2.4.2
 #  - Run via: bash ./infra/deno-deploy/deploy-deno.sh
 
 set -euo pipefail
@@ -11,22 +12,38 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Configuration
-PROJECT_NAME="${DENO_DEPLOY_PROJECT:-}"
-ENTRYPOINT="${ENTRYPOINT:-jsr:@std/http/file-server}"
+APP_NAME="${DENO_DEPLOY_PROJECT:-}"
+ORG_NAME="${DENO_DEPLOY_ORG:-}"
 SITE_DIR="${SITE_DIR:-./public}"
 
 # Validate required vars
-if [ -z "$PROJECT_NAME" ]; then
+if [ -z "$APP_NAME" ]; then
   echo -e "${RED}Error: DENO_DEPLOY_PROJECT environment variable is required${NC}"
   echo ""
   echo "Usage:"
-  echo "  export DENO_DEPLOY_PROJECT=your-project-name"
+  echo "  export DENO_DEPLOY_TOKEN=your-token"
+  echo "  export DENO_DEPLOY_PROJECT=your-app-name"
   echo "  bash ./infra/deno-deploy/deploy-deno.sh"
   echo ""
   echo "Optional environment variables:"
-  echo "  DENO_DEPLOY_TOKEN - API token (required if not authenticated via deployctl)"
-  echo "  ENTRYPOINT        - Defaults to jsr:@std/http/file-server"
-  echo "  SITE_DIR          - Directory to deploy, defaults to ./public"
+  echo "  DENO_DEPLOY_ORG - Organisation slug (required if app is under an org)"
+  echo "  SITE_DIR        - Directory to deploy, defaults to ./public"
+  exit 1
+fi
+
+if [ -z "${DENO_DEPLOY_TOKEN:-}" ]; then
+  echo -e "${RED}Error: DENO_DEPLOY_TOKEN environment variable is required${NC}"
+  echo "Get your token from: https://console.deno.com/account/tokens"
+  exit 1
+fi
+
+# Validate Deno is on the latest stable version
+DENO_VERSION=$(deno --version | head -1 | awk '{print $2}')
+LATEST_DENO=$(curl -fsSL https://dl.deno.land/release-latest.txt | tr -d 'v\n')
+
+if [ "$DENO_VERSION" != "$LATEST_DENO" ]; then
+  echo -e "${RED}Error: Deno $LATEST_DENO is required (found $DENO_VERSION)${NC}"
+  echo "Upgrade: deno upgrade"
   exit 1
 fi
 
@@ -43,22 +60,16 @@ if [ -z "$(ls -A "$SITE_DIR")" ]; then
   exit 1
 fi
 
-# Check deployctl is available
-if ! command -v deployctl &>/dev/null; then
-  echo -e "${RED}Error: Deno deployctl not found${NC}"
-  echo "Run 'deno task setup' first."
-  exit 1
-fi
-
 echo -e "${GREEN}Deno Deploy Deployment${NC}"
 echo "======================================"
-echo "  Project:    $PROJECT_NAME"
-echo "  Site dir:   $SITE_DIR"
-echo "  Entrypoint: $ENTRYPOINT"
+echo "  App:      $APP_NAME"
+echo "  Org:      ${ORG_NAME:-"(from deno.json or default)"}"
+echo "  Site dir: $SITE_DIR"
+echo "  Deno:     $DENO_VERSION"
 echo ""
 
-read -r -p "Deploy to Deno Deploy now? [y/N] " CONFIRM
-if [[ ! "$CONFIRM" =~ ^[yY]$ ]]; then
+read -r -p "Deploy to Deno Deploy? [y/N] " CONFIRM
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
   echo -e "${YELLOW}Deployment cancelled.${NC}"
   exit 0
 fi
@@ -68,19 +79,19 @@ echo -e "${YELLOW}Deploying to Deno Deploy...${NC}"
 
 DEPLOY_ARGS=(
   deploy
-  --project="$PROJECT_NAME"
-  --include="$SITE_DIR"
-  "$ENTRYPOINT"
+  --app="$APP_NAME"
+  --token="$DENO_DEPLOY_TOKEN"
+  --static="$SITE_DIR"
+  --prod
 )
 
-# Pass token if set
-if [ -n "${DENO_DEPLOY_TOKEN:-}" ]; then
-  DEPLOY_ARGS+=(--token="$DENO_DEPLOY_TOKEN")
+if [ -n "$ORG_NAME" ]; then
+  DEPLOY_ARGS+=(--org="$ORG_NAME")
 fi
 
-deployctl "${DEPLOY_ARGS[@]}"
+deno "${DEPLOY_ARGS[@]}"
 
 echo ""
 echo -e "${GREEN}✓ Deployment complete!${NC}"
 echo ""
-echo "View your deployment at: https://dash.deno.com/projects/$PROJECT_NAME"
+echo "View your deployment at: https://console.deno.com/projects/$APP_NAME"
