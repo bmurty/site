@@ -8,7 +8,6 @@ FROM denoland/deno:2.6.10 AS base
 RUN apt-get update && apt-get install -y \
   curl \
   git \
-  git-lfs \
   ca-certificates \
   && update-ca-certificates \
   && rm -rf /var/lib/apt/lists/*

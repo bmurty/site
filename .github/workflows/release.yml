@@ -11,8 +11,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          lfs: true
       - name: Build site
         id: build-site
         uses: ./.github/actions/build-site
@@ -33,8 +31,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-        with:
-          lfs: true
       - name: Download build files
         uses: actions/download-artifact@v7
         with:
@@ -60,7 +56,6 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0
-          lfs: true
       - name: Generate release notes
         run: bash 'dev/release-notes.sh' 'release-notes.log'
       - name: Create GitHub release

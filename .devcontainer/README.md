@@ -7,7 +7,7 @@ This directory contains the configuration for a [Development Container](https://
 The devcontainer provides a complete development environment with:
 
 - **Deno 2.6.10**: The JavaScript/TypeScript runtime
-- **Git & Git LFS**: Version control with large file support
+- **Git**: Version control system
 - **VS Code Deno Extension**: Full IDE support for Deno development
 
 ## Getting Started

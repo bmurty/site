@@ -5,7 +5,6 @@ FROM denoland/deno:2.6.10
 RUN apt-get update && apt-get install -y \
   curl \
   git \
-  git-lfs \
   ca-certificates \
   bash \
   sudo \
