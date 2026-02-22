@@ -1,5 +1,5 @@
 /**
- * Tests for ECS Auto-Scaling configuration files
+ * Tests for AWS Deployment configuration files
  */
 
 import { assertEquals } from "@std/assert";
@@ -7,7 +7,7 @@ import { existsSync } from "@std/fs";
 
 const projectRoot = Deno.cwd();
 
-Deno.test("ECS Auto-Scaling Configuration Files", async (test) => {
+Deno.test("AWS Deployment Configuration Files", async (test) => {
   await test.step("CloudFormation template exists", () => {
     const filePath = `${projectRoot}/infra/ecs-autoscaling.cloudformation.yaml`;
     assertEquals(

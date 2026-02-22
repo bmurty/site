@@ -43,7 +43,7 @@ export AWS_SECRET_ACCESS_KEY
 export AWS_DEFAULT_REGION="${AWS_REGION}"
 
 echo ""
-echo -e "${GREEN}ECS Auto-Scaling Deployment Script${NC}"
+echo -e "${GREEN}AWS Deployment Script${NC}"
 echo "======================================"
 
 # Check if ECS cluster name is provided
