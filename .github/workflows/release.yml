@@ -62,11 +62,11 @@ jobs:
           fetch-depth: 0
           lfs: true
       - name: Generate release notes
-        run: deno task release-notes './release-notes.log'
+        run: bash 'dev/release-notes.sh' 'release-notes.log'
       - name: Create GitHub release
         uses: ncipollo/release-action@v1
         with:
           name: ${{ github.ref_name }}
           tag: ${{ github.ref_name }}
-          bodyFile: ./release-notes.log
+          bodyFile: release-notes.log
           makeLatest: true
