@@ -133,12 +133,12 @@ The `bin/` directory contains platform-specific Deno binaries managed by Git LFS
 
 ### Docker
 
-Docker support is available via `docker-compose.yaml`:
+Docker support is available via `docker/docker-compose.yaml`:
 
 - `deno task docker-dev` - Development container
 - `deno task docker-prod` - Production container
 
-See `docs/DOCKER.md` for detailed Docker instructions.
+See `docker/README.md` for detailed Docker instructions.
 
 ## Code Style
 

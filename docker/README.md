@@ -41,11 +41,11 @@ Access the site at [http://localhost:8080](http://localhost:8080)
 ### Build Images
 
 ```bash
-# Build development image
-docker build --target development -t murty-site:dev .
+# Build development image (from project root)
+docker build -f docker/Dockerfile --target development -t murty-site:dev .
 
-# Build production image
-docker build --target production -t murty-site:prod .
+# Build production image (from project root)
+docker build -f docker/Dockerfile --target production -t murty-site:prod .
 ```
 
 ### Run Containers
@@ -62,27 +62,27 @@ docker run -p 8000:8000 murty-site:prod
 
 ```bash
 # Run tests
-docker-compose run dev deno task test
+docker compose -f docker/docker-compose.yaml run dev deno task test
 
 # Lint code
-docker-compose run dev deno task lint
+docker compose -f docker/docker-compose.yaml run dev deno task lint
 
 # Build site manually
-docker-compose run dev deno task build
+docker compose -f docker/docker-compose.yaml run dev deno task build
 
 # Access shell
-docker-compose run dev sh
+docker compose -f docker/docker-compose.yaml run dev sh
 ```
 
 ## Deployment to AWS ECS
 
-For auto-scaling configuration, see [infra/ECS-AUTOSCALING.md](../infra/ECS-AUTOSCALING.md).
+For auto-scaling configuration, see [infra/README.md](../infra/README.md).
 
 ### 1. Build and Tag for ECR
 
 ```bash
-# Build production image
-docker build --target production -t murty-site:latest .
+# Build production image (from project root)
+docker build -f docker/Dockerfile --target production -t murty-site:latest .
 
 # Tag for ECR (replace with your AWS account ID and region)
 docker tag murty-site:latest <aws-account-id>.dkr.ecr.<region>.amazonaws.com/murty-site:latest

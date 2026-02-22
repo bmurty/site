@@ -2,22 +2,22 @@ services:
   # Development service - builds and serves the site with hot reload capability
   dev:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
       target: development
     ports:
       - "8000:8000"
     volumes:
       # Mount source code for live editing
-      - ./src:/app/src
-      - ./content:/app/content
-      - ./assets:/app/assets
-      - ./config:/app/config
-      - ./scripts:/app/scripts
-      - ./src/docker-server.ts:/app/docker-server.ts
+      - ../src:/app/src
+      - ../content:/app/content
+      - ../assets:/app/assets
+      - ../config:/app/config
+      - ../scripts:/app/scripts
+      - ../src/docker-server.ts:/app/docker-server.ts
       # Mount build outputs (allows seeing built files)
-      - ./public:/app/public
-      - ./build:/app/build
+      - ../public:/app/public
+      - ../build:/app/build
       # Use named volume for Deno cache to speed up rebuilds
       - deno_cache:/deno-dir
     environment:
@@ -28,8 +28,8 @@ services:
   # Production service - serves pre-built static site
   prod:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: docker/Dockerfile
       target: production
     ports:
       - "8080:8000"

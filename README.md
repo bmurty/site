@@ -23,9 +23,9 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 | [bin](bin/) | Binary files used to ensure environment consistency, managed by Git LFS. |
 | [config](config/) | Supporting configuration files. |
 | [content](content/) | Website page content in [Markdown](https://daringfireball.net/projects/markdown/syntax) files. |
-| [dev](dev/) | Dev helper scripts, refer to the `Commands` section above for more details. |
-| [docs](docs/) | Documentation for Docker and ECS deployment. |
-| [infra](infra/) | AWS ECS infrastructure setup files. |
+| [dev](dev/) | Dev helper scripts, run `deno task` to show available options. |
+| [docker](docker/) | Docker configuration and documentation. See [docker/README.md](docker/README.md) for details. |
+| [infra](infra/) | AWS ECS infrastructure files (CloudFormation, Terraform, task definitions). |
 | [src](src/) | Source code and related unit tests. |
 | [src/layouts](src/layouts/) | Nunjucks page layouts. |
 | [src/styles](src/styles/) | CSS styles. |
@@ -59,14 +59,6 @@ Remote testing and [GitHub Pages](https://pages.github.com/) deployment can be t
 
 10. **Optional:** Install [VS Code](https://code.visualstudio.com/) and add the [Deno](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno) plugin
 
-## Commands
-
-For a full list of the available Deno shortcut commands, run:
-
-```bash
-deno task
-```
-
 ## Docker Usage
 
-For detailed Docker build and deployment instructions, see [docs/DOCKER.md](docs/DOCKER.md).
+For detailed Docker build and deployment instructions, see [docker/README.md](docker/README.md).

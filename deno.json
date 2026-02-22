@@ -52,11 +52,11 @@
     },
     "docker-dev": {
       "description": "Build and run the development Docker container",
-      "command": "docker compose up -d dev"
+      "command": "docker compose -f docker/docker-compose.yaml up -d dev"
     },
     "docker-prod": {
       "description": "Build and run the production Docker container",
-      "command": "docker compose up -d prod"
+      "command": "docker compose -f docker/docker-compose.yaml up -d prod"
     },
     "lint": {
       "description": "Run Deno's linting and formatting tools with the configuration defined above.",
@@ -77,6 +77,10 @@
     "release-notes": {
       "description": "Generates content for the GitHub Release description.",
       "command": "bash ./dev/release-notes.sh"
+    },
+    "deploy-aws": {
+      "description": "Deploy to AWS ECS.",
+      "command": "bash ./infra/deploy-aws.sh"
     },
     "web": {
       "description": "Start a web server to show the built site.",
