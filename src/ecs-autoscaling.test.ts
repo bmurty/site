@@ -78,7 +78,7 @@ Deno.test("ECS Auto-Scaling Configuration Files", async (test) => {
   });
 
   await test.step("GitHub Actions workflow exists and is valid YAML", () => {
-    const filePath = `${projectRoot}/.github/workflows/deploy-ecs-autoscaling.yml`;
+    const filePath = `${projectRoot}/.github/workflows/deploy-aws.yml`;
     assertEquals(
       existsSync(filePath),
       true,
