@@ -2,8 +2,8 @@
  * Tests for ECS Auto-Scaling configuration files
  */
 
-import { assertEquals } from "jsr:@std/assert";
-import { existsSync } from "jsr:@std/fs";
+import { assertEquals } from "@std/assert";
+import { existsSync } from "@std/fs";
 
 const projectRoot = Deno.cwd();
 
