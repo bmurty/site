@@ -1,13 +1,33 @@
 name: Deploy - Deno Deploy
 on:
   workflow_dispatch:
+    branches:
+      main
     inputs:
       confirm:
-        description: 'Type "deploy" to confirm deployment to Deno Deploy'
+        description: 'Type "deploy" to confirm production deployment to Deno Deploy'
         required: true
         type: string
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Build site
+        id: build-site
+        uses: ./.github/actions/build-site
+      - name: Download build files
+        uses: actions/download-artifact@v7
+        with:
+          name: ${{ steps.build-site.outputs.artifact-file-name }}
+      - name: Run tests
+        shell: bash
+        run: deno task test
   deploy-deno:
+    needs: test
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -22,24 +42,19 @@ jobs:
           echo "Deployment confirmed. Proceeding with Deno Deploy..."
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Install Deno
-        uses: denoland/setup-deno@v2
-        with:
-          deno-version: latest
-      - name: Build site
-        id: build-site
-        uses: ./.github/actions/build-site
       - name: Download build files
         uses: actions/download-artifact@v7
         with:
           name: ${{ steps.build-site.outputs.artifact-file-name }}
-# TODO: Run tests here too, next step requires tests to pass
       - name: Deploy to Deno Deploy
         env:
+          DENO_DEPLOY_ORG: ${{ secrets.DENO_DEPLOY_ORG }}
+          DENO_DEPLOY_PROJECT: ${{ secrets.DENO_DEPLOY_PROJECT }}
           DENO_DEPLOY_TOKEN: ${{ secrets.DENO_DEPLOY_TOKEN }}
         run: |
           deno deploy \
-            --app=${{ secrets.DENO_DEPLOY_PROJECT }} \
+            --org=$DENO_DEPLOY_ORG \
+            --app=$DENO_DEPLOY_PROJECT \
             --token=$DENO_DEPLOY_TOKEN \
-            --static=public \
+            --static=_site \
             --prod

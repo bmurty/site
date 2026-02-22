@@ -18,7 +18,7 @@ runs:
     - name: Setup Deno
       uses: denoland/setup-deno@v2
       with:
-        deno-version: v2.6.10
+        deno-version: latest
     - name: Setup environment
       shell: bash
       run: deno task setup
@@ -34,7 +34,6 @@ runs:
         retention-days: 1
         compression-level: 9
         path: |
-          build/
           _site/
           .env
 branding:
