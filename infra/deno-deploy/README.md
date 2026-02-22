@@ -4,7 +4,7 @@ Deploy the murty-site static site to [Deno Deploy](https://deno.com/deploy).
 
 ## Overview
 
-Deno Deploy serves the pre-built static site from the `public/` directory using Deno's standard file server.
+Deno Deploy serves the pre-built static site from the `_site/` directory using Deno's standard file server.
 
 ## Files
 
@@ -47,8 +47,8 @@ bash ./infra/deno-deploy/deploy-deno.sh
 
 ## How it Works
 
-1. The site is built via `deno task build`, producing static files in `public/`
-2. `deployctl` uploads the `public/` directory to Deno Deploy
+1. The site is built via `deno task build`, producing static files in `_site/`
+2. `deployctl` uploads the `_site/` directory to Deno Deploy
 3. Deno Deploy serves the files using [`@std/http/file-server`](https://jsr.io/@std/http)
 
 ## Reference

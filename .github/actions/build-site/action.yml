@@ -35,7 +35,7 @@ runs:
         compression-level: 9
         path: |
           build/
-          public/
+          _site/
           .env
 branding:
   icon: "box"

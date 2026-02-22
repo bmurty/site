@@ -10,7 +10,7 @@ import "@std/dotenv/load";
 // Build the site using Lume
 const site = lume({
   src: "./build",
-  dest: "./public",
+  dest: "./_site",
   prettyUrls: true,
 });
 

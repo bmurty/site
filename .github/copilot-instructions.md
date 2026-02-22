@@ -10,7 +10,7 @@ All commands are run via `deno task <command>`:
 - **Test**: `deno task test` - Run all tests in the `src/` directory
   - Single test: `deno test --allow-run=deno --allow-env --allow-read --allow-net src/<filename>.test.ts`
 - **Lint**: `deno task lint` - Run Deno lint and format
-- **Local server**: `deno task serve` - Serve built site from `public/` directory on port 8000
+- **Local server**: `deno task serve` - Serve built site from `_site/` directory on port 8000
 
 Other useful commands:
 
@@ -33,7 +33,7 @@ The build is orchestrated by `dev/build.sh` which:
    - `content/*` → `build/` (Markdown files with frontmatter)
 4. Combines and minifies CSS files into `build/_assets/css/styles.min.css`
 5. Runs Lume to generate static HTML from Markdown + Nunjucks templates
-6. Copies static assets (fonts, images, config files) to `public/`
+6. Copies static assets (fonts, images, config files) to `_site/`
 7. Generates JSON Feed for blog posts via `src/json-feed.ts`
 8. Cleans up `build/` directory
 
@@ -54,7 +54,7 @@ The build is orchestrated by `dev/build.sh` which:
 - **`infra/`**: Deployment infrastructure
   - `infra/aws-ecs/`: AWS ECS deployment (CloudFormation, Terraform, task definition)
   - `infra/deno-deploy/`: Deno Deploy deployment (deployctl)
-- **`public/`**: Built output (generated, not committed)
+- **`_site/`**: Built output (generated, not committed)
 - **`build/`**: Temporary directory during build (cleaned up after)
 
 ### Configuration
@@ -81,7 +81,7 @@ The site uses these Lume plugins:
 Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 
 - Run via `deno run --allow-read --allow-write --allow-env src/json-feed.ts`
-- Reads Markdown files from `public/posts/`
+- Reads Markdown files from `_site/posts/`
 - Parses frontmatter and content
 - Outputs JSON Feed 1.1 format
 - See `src/types.ts` for type definitions
@@ -93,7 +93,7 @@ Blog posts are published as a JSON Feed at `/brendan/posts.json`:
 - Tests use Deno's built-in test framework with `Deno.test()`
 - Tests use `test.step()` for sub-tests
 - Tests are co-located with source files (e.g., `json-feed.ts` and `json-feed.test.ts`)
-- Tests check for file existence and non-empty content in `public/` directory
+- Tests check for file existence and non-empty content in `_site/` directory
 - Required permissions: `--allow-read --allow-write --allow-env --allow-net --allow-run=deno`
 
 ### CSS Organization

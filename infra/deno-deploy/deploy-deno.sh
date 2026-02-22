@@ -11,10 +11,10 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Configuration
+# Configuration with suitable default values
 APP_NAME="${DENO_DEPLOY_PROJECT:-}"
 ORG_NAME="${DENO_DEPLOY_ORG:-}"
-SITE_DIR="${SITE_DIR:-./public}"
+SITE_DIR="${SITE_DIR:-./_site}"
 
 # Validate required vars
 if [ -z "$APP_NAME" ]; then
@@ -27,7 +27,7 @@ if [ -z "$APP_NAME" ]; then
   echo ""
   echo "Optional environment variables:"
   echo "  DENO_DEPLOY_ORG - Organisation slug (required if app is under an org)"
-  echo "  SITE_DIR        - Directory to deploy, defaults to ./public"
+  echo "  SITE_DIR        - Directory to deploy, defaults to ./_site"
   exit 1
 fi
 

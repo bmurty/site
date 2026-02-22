@@ -88,7 +88,7 @@
     },
     "serve": {
       "description": "Start a web server to show the built site.",
-      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./public"
+      "command": "deno run --allow-net --allow-read jsr:@std/http/file-server ./_site"
     },
     "setup": {
       "description": "Setup directories, check for and install dependencies, used for local environments and in CI.",

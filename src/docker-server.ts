@@ -12,7 +12,7 @@ Deno.serve({ port }, async (req) => {
     filepath += "index.html";
   }
 
-  const fullPath = `./public${filepath}`;
+  const fullPath = `./_site${filepath}`;
 
   try {
     const file = await Deno.open(fullPath, { read: true });
@@ -69,7 +69,7 @@ Deno.serve({ port }, async (req) => {
     if (error instanceof Deno.errors.NotFound) {
       try {
         // Try to serve 404.html if it exists
-        const notFoundFile = await Deno.open("./public/404.html", { read: true });
+        const notFoundFile = await Deno.open("./_site/404.html", { read: true });
         return new Response(notFoundFile.readable, {
           status: 404,
           headers: { "Content-Type": "text/html; charset=utf-8" },

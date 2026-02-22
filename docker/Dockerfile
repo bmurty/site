@@ -53,7 +53,7 @@ WORKDIR /app
 COPY src/docker-server.ts ./
 
 # Copy only the built site
-COPY --from=builder /app/public ./public
+COPY --from=builder /app/_site ./_site
 
 # Expose port for web server
 EXPOSE 8000

@@ -8,7 +8,7 @@
 
 # Build artifacts
 build/
-public/
+_site/
 node_modules/
 
 # Environment files (will be handled separately)

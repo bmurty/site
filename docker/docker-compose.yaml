@@ -16,7 +16,7 @@ services:
       - ../scripts:/app/scripts
       - ../src/docker-server.ts:/app/docker-server.ts
       # Mount build outputs (allows seeing built files)
-      - ../public:/app/public
+      - ../_site:/app/_site
       - ../build:/app/build
       # Use named volume for Deno cache to speed up rebuilds
       - deno_cache:/deno-dir

@@ -13,7 +13,7 @@ NC="\033[0m"
 # Define the temporary build directory (BUILD_DIR) and public output directory (PUBLIC_DIR)
 
 BUILD_DIR="build"
-PUBLIC_DIR="public"
+PUBLIC_DIR="_site"
 
 # Format and lint code
 
