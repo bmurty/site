@@ -56,6 +56,13 @@ echo "  Site dir:   $SITE_DIR"
 echo "  Entrypoint: $ENTRYPOINT"
 echo ""
 
+read -r -p "Deploy to Deno Deploy? [y/N] " CONFIRM
+if [[ ! "$CONFIRM" =~ ^[yY]$ ]]; then
+  echo -e "${YELLOW}Deployment cancelled.${NC}"
+  exit 0
+fi
+
+echo ""
 echo -e "${YELLOW}Deploying to Deno Deploy...${NC}"
 
 DEPLOY_ARGS=(

@@ -26,6 +26,18 @@ TARGET_MEMORY="${TARGET_MEMORY:-80}"
 SCALE_OUT_COOLDOWN="${SCALE_OUT_COOLDOWN:-60}"
 SCALE_IN_COOLDOWN="${SCALE_IN_COOLDOWN:-300}"
 
+# Confirmation prompt (defaults to no)
+echo -e "${YELLOW}Deploy ECS auto-scaling configuration to AWS?${NC}"
+read -r -p "Continue? [y/N] " CONFIRM
+CONFIRM="${CONFIRM:-n}"
+
+if [[ ! "$CONFIRM" =~ ^[Yy]$ ]]; then
+  echo -e "${RED}Deployment cancelled.${NC}"
+  exit 0
+fi
+
+echo ""
+
 # Prompt for AWS credentials
 echo -e "${YELLOW}AWS CLI Configuration${NC}"
 echo "Please enter your AWS credentials:"
